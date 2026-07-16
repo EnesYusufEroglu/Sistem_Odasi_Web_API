@@ -165,35 +165,35 @@ function anlikVerileriGetir() {
             const tarih = new Date(data.kayitTarihi);
             document.getElementById("last-update").textContent = tarih.toLocaleTimeString();
 
-            // --- DİJİTAL TABLO GÜNCELLEMELERİ ---
+// --- DİJİTAL TABLO GÜNCELLEMELERİ (HAREKETLİ VE RENKLİ ALARMLAR) ---
             document.getElementById("table-temp").textContent = `${data.sicaklik.toFixed(1)} °C`;
             const tempStatus = document.getElementById("table-temp-status");
             if (data.sicaklik > 28) {
-                tempStatus.textContent = "⚠️ YÜKSEK SICAKLIK";
-                tempStatus.className = "text-red";
+                tempStatus.textContent = "⚠️ YÜKSEK SICAKLIK ALARMI";
+                tempStatus.className = "text-red-alarm"; // Sallanan ve parlayan kırmızı alarm
             } else {
                 tempStatus.textContent = "✅ Stabil";
-                tempStatus.className = "text-green";
+                tempStatus.className = "text-green-stable";
             }
 
             document.getElementById("table-hum").textContent = `${data.nem.toFixed(1)} %`;
             const humStatus = document.getElementById("table-hum-status");
             if (data.nem > 70 || data.nem < 30) {
-                humStatus.textContent = "⚠️ Limit Dışı";
-                humStatus.className = "text-red";
+                humStatus.textContent = "⚠️ Limit Dışı Uyarı";
+                humStatus.className = "text-yellow-alarm"; // Parlayan turuncu uyarı
             } else {
                 humStatus.textContent = "✅ Stabil";
-                humStatus.className = "text-green";
+                humStatus.className = "text-green-stable";
             }
 
             document.getElementById("table-gas").textContent = `${data.gaz} PPM`;
             const gasStatus = document.getElementById("table-gas-status");
             if (data.gaz > 300) {
-                gasStatus.textContent = "🚨 TEHLİKELİ GAZ";
-                gasStatus.className = "text-red";
+                gasStatus.textContent = "🚨 TEHLİKELİ GAZ/DUMAN SIZINTISI";
+                gasStatus.className = "text-red-alarm"; // Sallanan ve parlayan kırmızı alarm
             } else {
                 gasStatus.textContent = "✅ Temiz";
-                gasStatus.className = "text-green";
+                gasStatus.className = "text-green-stable";
             }
 
             const tableEnergy = document.getElementById("table-energy");
@@ -201,24 +201,26 @@ function anlikVerileriGetir() {
             if (data.enerjiVarMi) {
                 tableEnergy.textContent = "Şebeke";
                 tableEnergyStatus.textContent = "🔌 Kesintisiz";
-                tableEnergyStatus.className = "text-green";
+                tableEnergyStatus.className = "text-green-stable";
             } else {
                 tableEnergy.textContent = "UPS / Jeneratör";
-                tableEnergyStatus.textContent = "🔋 Elektrik Kesintisi!";
-                tableEnergyStatus.className = "text-red";
+                tableEnergyStatus.textContent = "🔋 ELEKTRİK KESİNTİSİ!";
+                tableEnergyStatus.className = "text-red-alarm"; // Elektrik gidince titreşen alarm
             }
-            // --- TABLO KAPİ DURUMU GÜNCELLEMESİ (YENİ) ---
+
+            // --- TABLO KAPİ DURUMU GÜNCELLEMESİ (HAREKETLİ) ---
             const tableDoor = document.getElementById("table-door");
             const tableDoorStatus = document.getElementById("table-door-status");
             if (data.kapiAcikMi) {
                 tableDoor.textContent = "AÇIK";
-                tableDoorStatus.textContent = "🚨 Güvenlik İhlali!";
-                tableDoorStatus.className = "text-red";
+                tableDoorStatus.textContent = "🚨 KAPALI OLMALIDIR / YETKİSİZ GİRİŞ!";
+                tableDoorStatus.className = "text-red-alarm"; // Kapı açık unutulursa titreşen alarm
             } else {
                 tableDoor.textContent = "KAPALI";
                 tableDoorStatus.textContent = "✅ Güvenli";
-                tableDoorStatus.className = "text-green";
+                tableDoorStatus.className = "text-green-stable";
             }
+            // -------------------------------------
         })
         .catch(error => {
             statusBadge.textContent = "BAĞLANTI HATASI / VERİ YOK";

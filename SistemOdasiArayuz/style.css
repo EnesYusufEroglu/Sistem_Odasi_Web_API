@@ -257,3 +257,74 @@ footer {
 .hidden {
     display: none !important;
 }
+
+/* --- ACİL DURUM VE ALARM STİLLERİ --- */
+
+/* 1. Kritik Tehlike Rozetleri İçin Yanıp Sönen (Pulse + Glow) Efekti */
+.door-badge.door-open,
+.energy-badge.energy-fail {
+    font-size: 1rem !important; /* Yazı boyutunu büyüttük */
+    height: 42px !important;    /* Rozeti daha geniş ve görünür yaptık */
+    padding: 0 24px !important;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.8);
+    animation: extreme-danger-pulse 1s infinite alternate !important;
+}
+
+/* Devasa Kırmızı Alarm Animasyonu (Yazı ve arka plan aynı anda parlar) */
+@keyframes extreme-danger-pulse {
+    0% {
+        background-color: rgba(239, 68, 68, 0.2);
+        border-color: rgba(239, 68, 68, 0.5);
+        transform: scale(1);
+        box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+    }
+    100% {
+        background-color: rgba(239, 68, 68, 0.85);
+        color: #ffffff;
+        border-color: #ef4444;
+        transform: scale(1.05); /* Sürekli hafifçe büyüyüp küçülür */
+        box-shadow: 0 0 25px rgba(239, 68, 68, 0.9), inset 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+}
+
+/* 2. Dijital Tablodaki Tehlike Metinleri İçin Ekranı Sallayan Dikkat Çekici Animasyon */
+.text-red-alarm {
+    color: #ff4545;
+    font-weight: 900;
+    font-size: 1.1rem;
+    display: inline-block;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+    animation: text-shake 0.5s infinite;
+}
+
+@keyframes text-shake {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-1px, 1px); }
+    40% { transform: translate(-1px, -1px); }
+    60% { transform: translate(1px, 1px); }
+    80% { transform: translate(1px, -1px); }
+    100% { transform: translate(0, 0); }
+}
+
+/* 3. Dijital Tablodaki Sarı Limit Dışı Uyarıları İçin Yavaşça Parlayan Turuncu Efekt */
+.text-yellow-alarm {
+    color: #fbbf24;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+    animation: yellow-glow 1.5s infinite alternate;
+}
+
+@keyframes yellow-glow {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; text-shadow: 0 0 15px rgba(251, 191, 36, 0.9); }
+}
+
+/* Temiz ve Güvenli Durumlar İçin Yumuşak Yeşil Parlama */
+.text-green-stable {
+    color: #10b981;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(16, 185, 129, 0.2);
+}
