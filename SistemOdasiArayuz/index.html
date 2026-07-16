@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Odası Ortam İzleme Paneli</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistem Odası Ortam Durumu</h1>
+            <p>Gerçek Zamanlı Takip Paneli (MSSQL Entegrasyonlu)</p>
+        </header>
+
+        <div class="status-strip">
+            <div id="connection-status" class="status-badge checking">Bağlantı Kontrol Ediliyor...</div>
+            <div id="energy-badge" class="energy-badge checking-energy">⚡ Enerji: Kontrol Ediliyor</div>
+        </div>
+
+        <div class="view-switcher-container">
+            <button id="btn-analog" class="switcher-btn active">📊 Analog Göstergeler</button>
+            <button id="btn-digital" class="switcher-btn">📋 Dijital Liste</button>
+        </div>
+
+        <main class="dashboard-grid">
+            <div class="card analog-view">
+                <h3>Sıcaklık</h3>
+                <div id="gauge-sicaklik" class="gauge"></div>
+                <div class="unit">°C</div>
+            </div>
+
+            <div class="card analog-view">
+                <h3>Nem Oranı</h3>
+                <div id="gauge-nem" class="gauge"></div>
+                <div class="unit">%</div>
+            </div>
+
+            <div class="card analog-view">
+                <h3>Gaz Seviyesi</h3>
+                <div id="gauge-gaz" class="gauge"></div>
+                <div class="unit">PPM</div>
+            </div>
+
+            <div class="card digital-view-container hidden">
+                <h3>Anlık Dijital Veri Listesi</h3>
+                <div class="table-wrapper">
+                    <table class="digital-table">
+                        <thead>
+                            <tr>
+                                <th>Parametre</th>
+                                <th>Değer</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>🌡️ Ortam Sıcaklığı</td>
+                                <td id="table-temp">-- °C</td>
+                                <td id="table-temp-status">--</td>
+                            </tr>
+                            <tr>
+                                <td>💧 Bağıl Nem</td>
+                                <td id="table-hum">-- %</td>
+                                <td id="table-hum-status">--</td>
+                            </tr>
+                            <tr>
+                                <td>⚠️ Duman / Gaz Yoğunluğu</td>
+                                <td id="table-gas">-- PPM</td>
+                                <td id="table-gas-status">--</td>
+                            </tr>
+                            <tr>
+                                <td>⚡ Enerji Kaynağı</td>
+                                <td id="table-energy">--</td>
+                                <td id="table-energy-status">--</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card chart-card">
+                <div class="chart-header">
+                    <h3>Ortam Parametreleri Değişim Grafiği</h3>
+                    <select id="data-limit-select" class="styled-select">
+                        <option value="20">Son 20 Veri</option>
+                        <option value="50">Son 50 Veri</option>
+                        <option value="100" selected>Son 100 Veri</option>
+                        <option value="-1">Son 24 Saat</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="historyChart"></canvas>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Son Güncelleme: <span id="last-update">--:--:--</span></p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.6.1/justgage.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+@SistemOdasiAPI_HostAddress = http://localhost:5100
+
+GET {{SistemOdasiAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
