@@ -7,9 +7,11 @@
         public double Nem { get; set; }
         public int Gaz { get; set; }
 
-        // Yeni Eklenen Sütun: Enerji Durumu
+        // Enerji Durumu
         public bool EnerjiVarMi { get; set; }
 
+        // Kapı Durumu (True: Açık, False: Kapalı)
+        public bool KapiAcikMi { get; set; }
         public DateTime KayitTarihi { get; set; }
     }
 }

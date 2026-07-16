@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "guHbAfeB0Vw=",
+  "dgSpecHash": "14796j9BLwg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ENES\\Desktop\\Staj Proje\\SistemOdasiAPI\\SistemOdasiAPI\\SistemOdasiAPI.csproj",
+  "projectFilePath": "C:\\Users\\ENES\\Desktop\\SistemOdasi-OrtamIzleme\\SistemOdasiAPI\\SistemOdasiAPI\\SistemOdasiAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ENES\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\ENES\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

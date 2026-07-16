@@ -1,0 +1,10 @@
+# .NET Core gereksiz dosyalar
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user

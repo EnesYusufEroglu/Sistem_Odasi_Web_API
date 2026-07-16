@@ -51,8 +51,8 @@ header p {
     flex-wrap: wrap;
 }
 
-/* Rozetlerin yükseklik ve iç hizalamalarını sabitledik */
-.status-badge, .energy-badge {
+/* Rozetlerin yükseklik ve iç hizalamalarını sabitledik (door-badge eklendi) */
+.status-badge, .energy-badge, .door-badge {
     height: 38px;
     padding: 0 18px;
     border-radius: 10px;
@@ -63,6 +63,25 @@ header p {
     justify-content: center;
     white-space: nowrap;
     border: 1px solid transparent;
+}
+
+/* Kapı Durumuna Özel Rozet Renkleri */
+.door-badge.checking-door { 
+    background-color: #334155; 
+    color: #94a3b8; 
+}
+
+.door-badge.door-closed { 
+    background-color: rgba(16, 185, 129, 0.1); 
+    color: #10b981; 
+    border-color: rgba(16, 185, 129, 0.3); 
+}
+
+.door-badge.door-open { 
+    background-color: rgba(239, 68, 68, 0.15); 
+    color: #ef4444; 
+    border-color: rgba(239, 68, 68, 0.4); 
+    animation: pulse-red 1.5s infinite; /* Kapı açık kalınca kırmızı alarm yanıp sönecek */
 }
 
 /* Renk Tanımlamaları */

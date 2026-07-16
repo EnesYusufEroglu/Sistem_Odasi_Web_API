@@ -135,6 +135,9 @@
           "enerjiVarMi": {
             "type": "boolean"
           },
+          "kapiAcikMi": {
+            "type": "boolean"
+          },
           "kayitTarihi": {
             "type": "string",
             "format": "date-time"

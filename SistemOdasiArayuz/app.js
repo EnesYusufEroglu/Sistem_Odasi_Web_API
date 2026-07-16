@@ -143,13 +143,23 @@ function anlikVerileriGetir() {
             gaugeNem.refresh(data.nem);
             gaugeGaz.refresh(data.gaz);
 
-            // Enerji durumu güncellemesi
+            // --- ENERJİ DURUMU ROZET GÜNCELLEMESİ ---
             if (data.enerjiVarMi === true) {
                 energyBadge.className = "energy-badge energy-ok";
                 energyBadge.textContent = "⚡ Enerji: Şebeke";
             } else {
                 energyBadge.className = "energy-badge energy-fail";
                 energyBadge.textContent = "⚡ Enerji: Jeneratör";
+            }
+
+            // --- KAPİ DURUMU ROZET GÜNCELLEMESİ (YENİ) ---
+            const doorBadge = document.getElementById("door-badge");
+            if (data.kapiAcikMi === true) {
+                doorBadge.className = "door-badge door-open";
+                doorBadge.textContent = "🚪 Kapı: AÇIK (ALARM)";
+            } else {
+                doorBadge.className = "door-badge door-closed";
+                doorBadge.textContent = "🚪 Kapı: Kilitli";
             }
 
             const tarih = new Date(data.kayitTarihi);
@@ -197,7 +207,18 @@ function anlikVerileriGetir() {
                 tableEnergyStatus.textContent = "🔋 Elektrik Kesintisi!";
                 tableEnergyStatus.className = "text-red";
             }
-            // -------------------------------------
+            // --- TABLO KAPİ DURUMU GÜNCELLEMESİ (YENİ) ---
+            const tableDoor = document.getElementById("table-door");
+            const tableDoorStatus = document.getElementById("table-door-status");
+            if (data.kapiAcikMi) {
+                tableDoor.textContent = "AÇIK";
+                tableDoorStatus.textContent = "🚨 Güvenlik İhlali!";
+                tableDoorStatus.className = "text-red";
+            } else {
+                tableDoor.textContent = "KAPALI";
+                tableDoorStatus.textContent = "✅ Güvenli";
+                tableDoorStatus.className = "text-green";
+            }
         })
         .catch(error => {
             statusBadge.textContent = "BAĞLANTI HATASI / VERİ YOK";

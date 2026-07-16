@@ -4458,11 +4458,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ENES\\Desktop\\Staj Proje\\SistemOdasiAPI\\SistemOdasiAPI\\SistemOdasiAPI.csproj",
+      "projectUniqueName": "C:\\Users\\ENES\\Desktop\\SistemOdasi-OrtamIzleme\\SistemOdasiAPI\\SistemOdasiAPI\\SistemOdasiAPI.csproj",
       "projectName": "SistemOdasiAPI",
-      "projectPath": "C:\\Users\\ENES\\Desktop\\Staj Proje\\SistemOdasiAPI\\SistemOdasiAPI\\SistemOdasiAPI.csproj",
+      "projectPath": "C:\\Users\\ENES\\Desktop\\SistemOdasi-OrtamIzleme\\SistemOdasiAPI\\SistemOdasiAPI\\SistemOdasiAPI.csproj",
       "packagesPath": "C:\\Users\\ENES\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ENES\\Desktop\\Staj Proje\\SistemOdasiAPI\\SistemOdasiAPI\\obj\\",
+      "outputPath": "C:\\Users\\ENES\\Desktop\\SistemOdasi-OrtamIzleme\\SistemOdasiAPI\\SistemOdasiAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

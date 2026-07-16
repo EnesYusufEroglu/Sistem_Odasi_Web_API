@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SistemOdasiAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12d32d64fa9b5583ee0b5c4a92490552f4c38418")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aaa862757ff0cec80355159ddcbe77a0cc79cc80")]
 [assembly: System.Reflection.AssemblyProductAttribute("SistemOdasiAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SistemOdasiAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
