@@ -136,6 +136,33 @@ function anlikVerileriGetir() {
             return response.json();
         })
         .then(data => {
+            // --- ANALOG KART DİNAMİK ALARM KONTROLLERİ ---
+            const cardSicaklik = document.getElementById("card-sicaklik");
+            const cardNem = document.getElementById("card-nem");
+            const cardGaz = document.getElementById("card-gaz");
+
+            // Sıcaklık Kontrolü (> 28°C ise Alarm)
+            if (data.sicaklik > 28) {
+                cardSicaklik.classList.add("analog-danger");
+            } else {
+                cardSicaklik.classList.remove("analog-danger");
+            }
+
+            // Nem Kontrolü (< 30% veya > 70% ise Uyarı)
+            if (data.nem > 70 || data.nem < 30) {
+                cardNem.classList.add("analog-warning");
+            } else {
+                cardNem.classList.remove("analog-warning");
+            }
+
+            // Gaz Kontrolü (> 300 PPM ise Alarm)
+            if (data.gaz > 300) {
+                cardGaz.classList.add("analog-danger");
+            } else {
+                cardGaz.classList.remove("analog-danger");
+            }
+            // ---------------------------------------------
+            
             statusBadge.textContent = "SİSTEM ÇEVRİMİÇİ";
             statusBadge.className = "status-badge online";
 
@@ -165,7 +192,7 @@ function anlikVerileriGetir() {
             const tarih = new Date(data.kayitTarihi);
             document.getElementById("last-update").textContent = tarih.toLocaleTimeString();
 
-// --- DİJİTAL TABLO GÜNCELLEMELERİ (HAREKETLİ VE RENKLİ ALARMLAR) ---
+            // --- DİJİTAL TABLO GÜNCELLEMELERİ (HAREKETLİ VE RENKLİ ALARMLAR) ---
             document.getElementById("table-temp").textContent = `${data.sicaklik.toFixed(1)} °C`;
             const tempStatus = document.getElementById("table-temp-status");
             if (data.sicaklik > 28) {

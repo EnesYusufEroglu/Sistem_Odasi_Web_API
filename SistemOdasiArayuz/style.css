@@ -328,3 +328,41 @@ footer {
     font-weight: bold;
     text-shadow: 0 0 5px rgba(16, 185, 129, 0.2);
 }
+
+/* --- ANALOG KART GERÇEK FLAŞÖR (YANIP SÖNME) EFEKTLERİ --- */
+
+/* Kritik Tehlike Flaşörü (Kırmızı - Sıcaklık > 28 veya Gaz > 300) */
+.card.analog-danger {
+    animation: analog-danger-flash 0.8s infinite !important; /* 0.8 saniyede bir keskin flaş yapar */
+}
+
+@keyframes analog-danger-flash {
+    0%, 100% {
+        border-color: #334155;
+        background-color: #0f172a;
+        box-shadow: none;
+    }
+    50% {
+        border-color: #ef4444;
+        background-color: rgba(239, 68, 68, 0.25); /* Arka plan kırmızı dolgulanır */
+        box-shadow: 0 0 30px rgba(239, 68, 68, 0.8), inset 0 0 15px rgba(239, 68, 68, 0.4);
+    }
+}
+
+/* Limit Dışı Uyarı Flaşörü (Sarı/Turuncu - Nem Sınır Dışı) */
+.card.analog-warning {
+    animation: analog-warning-flash 1.2s infinite !important; /* Biraz daha yavaş flaş yapar */
+}
+
+@keyframes analog-warning-flash {
+    0%, 100% {
+        border-color: #334155;
+        background-color: #0f172a;
+        box-shadow: none;
+    }
+    50% {
+        border-color: #fbbf24;
+        background-color: rgba(251, 191, 36, 0.15); /* Arka plan sarı dolgulanır */
+        box-shadow: 0 0 25px rgba(251, 191, 36, 0.6), inset 0 0 10px rgba(251, 191, 36, 0.2);
+    }
+}

@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\ENES\\Desktop\\SistemOdasi-OrtamIzleme\\SistemOdasiAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ENES\\Desktop\\SistemOdasi-OrtamIzleme\\SistemOdasiAPI\\SistemOdasiAPI\\Migrations\\20260716141448_KapiDurumuEkleme.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SistemOdasiAPI\\Migrations\\20260716141448_KapiDurumuEkleme.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A1DDBB63-DC5A-419E-AF2D-CACC8CC95021}|SistemOdasiAPI\\SistemOdasiAPI.csproj|c:\\users\\enes\\desktop\\sistemodasi-ortamizleme\\sistemodasiapi\\sistemodasiapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1DDBB63-DC5A-419E-AF2D-CACC8CC95021}|SistemOdasiAPI\\SistemOdasiAPI.csproj|solutionrelative:sistemodasiapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1DDBB63-DC5A-419E-AF2D-CACC8CC95021}|SistemOdasiAPI\\SistemOdasiAPI.csproj|c:\\users\\enes\\desktop\\sistemodasi-ortamizleme\\sistemodasiapi\\sistemodasiapi\\migrations\\20260716141448_kapidurumuekleme.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1DDBB63-DC5A-419E-AF2D-CACC8CC95021}|SistemOdasiAPI\\SistemOdasiAPI.csproj|solutionrelative:sistemodasiapi\\migrations\\20260716141448_kapidurumuekleme.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A1DDBB63-DC5A-419E-AF2D-CACC8CC95021}|SistemOdasiAPI\\SistemOdasiAPI.csproj|c:\\users\\enes\\desktop\\sistemodasi-ortamizleme\\sistemodasiapi\\sistemodasiapi\\models\\ortamverisi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A1DDBB63-DC5A-419E-AF2D-CACC8CC95021}|SistemOdasiAPI\\SistemOdasiAPI.csproj|solutionrelative:sistemodasiapi\\models\\ortamverisi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1DDBB63-DC5A-419E-AF2D-CACC8CC95021}|SistemOdasiAPI\\SistemOdasiAPI.csproj|c:\\users\\enes\\desktop\\sistemodasi-ortamizleme\\sistemodasiapi\\sistemodasiapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1DDBB63-DC5A-419E-AF2D-CACC8CC95021}|SistemOdasiAPI\\SistemOdasiAPI.csproj|solutionrelative:sistemodasiapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A1DDBB63-DC5A-419E-AF2D-CACC8CC95021}|SistemOdasiAPI\\SistemOdasiAPI.csproj|c:\\users\\enes\\desktop\\sistemodasi-ortamizleme\\sistemodasiapi\\sistemodasiapi\\data\\sistemdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,17 +50,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "20260716141448_KapiDurumuEkleme.cs",
               "DocumentMoniker": "C:\\Users\\ENES\\Desktop\\SistemOdasi-OrtamIzleme\\SistemOdasiAPI\\SistemOdasiAPI\\Migrations\\20260716141448_KapiDurumuEkleme.cs",
               "RelativeDocumentMoniker": "SistemOdasiAPI\\Migrations\\20260716141448_KapiDurumuEkleme.cs",
               "ToolTip": "C:\\Users\\ENES\\Desktop\\SistemOdasi-OrtamIzleme\\SistemOdasiAPI\\SistemOdasiAPI\\Migrations\\20260716141448_KapiDurumuEkleme.cs",
               "RelativeToolTip": "SistemOdasiAPI\\Migrations\\20260716141448_KapiDurumuEkleme.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-16T14:14:48.789Z",
               "EditorCaption": ""
@@ -103,7 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ENES\\Desktop\\SistemOdasi-OrtamIzleme\\SistemOdasiAPI\\SistemOdasiAPI\\Program.cs",
               "RelativeDocumentMoniker": "SistemOdasiAPI\\Program.cs",
@@ -116,7 +116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "OrtamVerisi.cs",
               "DocumentMoniker": "C:\\Users\\ENES\\Desktop\\SistemOdasi-OrtamIzleme\\SistemOdasiAPI\\SistemOdasiAPI\\Models\\OrtamVerisi.cs",
               "RelativeDocumentMoniker": "SistemOdasiAPI\\Models\\OrtamVerisi.cs",
@@ -124,8 +124,7 @@
               "RelativeToolTip": "SistemOdasiAPI\\Models\\OrtamVerisi.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-16T07:23:56.996Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-16T07:23:56.996Z"
             },
             {
               "$type": "Document",
