@@ -92,7 +92,7 @@
                 </div>
             </div>
 
-            <!-- YENİ: Eşik Değer Ayarları Kartı (Varsayılan olarak gizli) -->
+            <!-- Eşik Değer Ayarları Kartı (Varsayılan olarak gizli) -->
             <div class="card settings-view-container hidden" id="settings-card">
                 <h3>⚠️ Kritik Eşik Değer Ayarları</h3>
                 <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Alarmların hangi değerlerde
@@ -122,12 +122,17 @@
             <div class="card chart-card">
                 <div class="chart-header">
                     <h3>Ortam Parametreleri Değişim Grafiği</h3>
-                    <select id="data-limit-select" class="styled-select">
-                        <option value="20">Son 20 Veri</option>
-                        <option value="50">Son 50 Veri</option>
-                        <option value="100" selected>Son 100 Veri</option>
-                        <option value="-1">Son 24 Saat</option>
-                    </select>
+                    <div class="chart-actions" style="display: flex; gap: 10px; align-items: center;">
+                        <!-- YENİ: CSV İndirme Butonu -->
+                        <button id="btn-download-csv" class="download-btn">📥 Raporu İndir (CSV)</button>
+
+                        <select id="data-limit-select" class="styled-select">
+                            <option value="20">Son 20 Veri</option>
+                            <option value="50">Son 50 Veri</option>
+                            <option value="100" selected>Son 100 Veri</option>
+                            <option value="-1">Son 24 Saat</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="chart-container">
                     <canvas id="historyChart"></canvas>

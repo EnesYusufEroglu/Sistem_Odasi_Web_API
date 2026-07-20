@@ -1,8 +1,9 @@
-const API_LAST_URL = "https://localhost:7014/api/Veri/son-durum"; 
-const API_HISTORY_BASE_URL = "https://localhost:7014/api/Veri/gecmis"; 
+const API_LAST_URL = "https://localhost:7014/api/Veri/son-durum";
+const API_HISTORY_BASE_URL = "https://localhost:7014/api/Veri/gecmis";
 
 let gaugeSicaklik, gaugeNem, gaugeGaz;
 let historyChart;
+let currentHistoryData = []; // CSV'ye dönüştürülecek verileri burada tutacağız
 
 // --- GLOBAL DİNAMİK EŞİK DEĞERLERİ ---
 let thresholds = {
@@ -12,8 +13,8 @@ let thresholds = {
     gasMax: 300
 };
 
-document.addEventListener("DOMContentLoaded", function() {
-    
+document.addEventListener("DOMContentLoaded", function () {
+
     // 1. LocalStorage'dan eşik değerleri yükle (Varsa)
     const savedThresholds = localStorage.getItem("system_thresholds");
     if (savedThresholds) {
@@ -26,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("input-hum-max").value = thresholds.humMax;
     document.getElementById("input-gas-max").value = thresholds.gasMax;
 
-    // 2. GÖSTERGELERİ (GAUGE) BAŞLAT
+    // Göstergeleri Başlat (Renkleri dinamik yöneteceğimiz için levelColors kaldırıldı)
     gaugeSicaklik = new JustGage({
         id: "gauge-sicaklik",
         value: 0,
@@ -35,8 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
         title: "Sıcaklık",
         label: "°C",
         valueFontColor: "#f8fafc",
-        titleFontColor: "#94a3b8",
-        levelColors: ["#3b82f6", "#f59e0b", "#ef4444"]
+        titleFontColor: "#94a3b8"
     });
 
     gaugeNem = new JustGage({
@@ -47,8 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
         title: "Nem",
         label: "%",
         valueFontColor: "#f8fafc",
-        titleFontColor: "#94a3b8",
-        levelColors: ["#93c5fd", "#3b82f6", "#1d4ed8"]
+        titleFontColor: "#94a3b8"
     });
 
     gaugeGaz = new JustGage({
@@ -59,8 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
         title: "Duman/Gaz",
         label: "PPM",
         valueFontColor: "#f8fafc",
-        titleFontColor: "#94a3b8",
-        levelColors: ["#10b981", "#f59e0b", "#ef4444"]
+        titleFontColor: "#94a3b8"
     });
 
     // 3. GRAFİK OLUŞTURMA
@@ -116,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const btnAnalog = document.getElementById("btn-analog");
     const btnDigital = document.getElementById("btn-digital");
     const btnSettings = document.getElementById("btn-settings");
-    
+
     const analogViews = document.querySelectorAll(".analog-view");
     const digitalView = document.querySelector(".digital-view-container");
     const settingsView = document.getElementById("settings-card");
@@ -168,29 +166,38 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Tarayıcı belleğine kaydet
         localStorage.setItem("system_thresholds", JSON.stringify(thresholds));
-        
+
         // Arayüzü hemen güncelle
         anlikVerileriGetir();
-        
+
         alert("Eşik değerleri başarıyla güncellendi ve kaydedildi!");
-        
+
         // Analog ekrana geri dön
         btnAnalog.click();
     });
 
     const selectElement = document.getElementById("data-limit-select");
-    selectElement.addEventListener("change", function() {
+    selectElement.addEventListener("change", function () {
         grafikVerileriniGuncelle(this.value);
     });
 
     anlikVerileriGetir();
     grafikVerileriniGuncelle(selectElement.value);
-    
+
     setInterval(() => {
         anlikVerileriGetir();
         const currentLimit = document.getElementById("data-limit-select").value;
         grafikVerileriniGuncelle(currentLimit);
     }, 2000);
+
+    // --- CSV İNDİRME TETİKLEYİCİSİ ---
+    document.getElementById("btn-download-csv").addEventListener("click", function() {
+        if (currentHistoryData.length === 0) {
+            alert("İndirilecek geçmiş veri bulunamadı!");
+            return;
+        }
+        exportToCSV(currentHistoryData);
+    });
 });
 
 function anlikVerileriGetir() {
@@ -326,8 +333,9 @@ function grafikVerileriniGuncelle(limit) {
             return response.json();
         })
         .then(siraliVeri => {
+            currentHistoryData = siraliVeri; // CSV için veriyi sakla
             const zamanEtiketleri = siraliVeri.map(x => {
-                const d = new Date(x.kayitTarihi);
+                const d = new Date(x.kayitTarihi); 
                 return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             });
 
@@ -343,4 +351,40 @@ function grafikVerileriniGuncelle(limit) {
             historyChart.update();
         })
         .catch(error => console.error("Grafik güncelleme hatası:", error));
+}
+
+// --- VERİLERİ EXCEL UYUMLU CSV DOSYASINA DÖNÜŞTÜRÜP İNDİREN FONKSİYON ---
+function exportToCSV(dataList) {
+    // Excel'in sütunları doğru ayırması için noktalı virgül (;) kullanıyoruz.
+    // Başlık satırı:
+    let csvContent = "Kayit Tarihi;Sicaklik (°C);Nem (%);Gaz Seviyesi (PPM);Enerji Durumu;Kapi Durumu\r\n";
+
+    // Veri satırlarını döngüyle ekliyoruz:
+    dataList.forEach(item => {
+        let tarih = new Date(item.kayitTarihi).toLocaleString('tr-TR');
+        let enerji = item.enerjiVarMi ? "Sebeke" : "UPS/Jenerator";
+        let kapi = item.kapiAcikMi ? "ACIK (ALARM)" : "KAPALI";
+        
+        // JS küsuratlı sayıların noktalarını Excel virgülüyle değiştirmek gerekebilir (.toFixed kullanarak temiz yazıyoruz)
+        let sicaklik = item.sicaklik.toFixed(1).replace('.', ',');
+        let nem = item.nem.toFixed(1).replace('.', ',');
+        
+        csvContent += `${tarih};${sicaklik};${nem};${item.gaz};${enerji};${kapi}\r\n`;
+    });
+
+    // Türkçe karakterlerin Excel'de düzgün açılması için UTF-8 BOM ekliyoruz (\uFEFF)
+    const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    
+    // Geçici bir gizli link oluşturup tarayıcıya tıklatıyoruz
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    
+    // Dosya adı dinamik olarak o anın tarihiyle kaydolur
+    const dosyaTarihi = new Date().toISOString().slice(0,10);
+    link.setAttribute("download", `Sistem_Odasi_Rapor_${dosyaTarihi}.csv`);
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }

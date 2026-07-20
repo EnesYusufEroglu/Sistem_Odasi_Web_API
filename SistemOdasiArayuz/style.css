@@ -51,7 +51,7 @@ header p {
     flex-wrap: wrap;
 }
 
-/* Rozetlerin yükseklik ve iç hizalamalarını sabitledik (door-badge eklendi) */
+/* Rozetlerin yükseklik ve iç hizalamalarını sabitler */
 .status-badge, .energy-badge, .door-badge {
     height: 38px;
     padding: 0 18px;
@@ -427,4 +427,26 @@ footer {
 
 .save-btn:hover {
     background-color: #059669;
+}
+
+/* --- CSV İNDİRME BUTONU STİLİ --- */
+.download-btn {
+    background-color: #1e293b;
+    color: #10b981; /* Canlı yeşil tonu */
+    border: 1px solid #10b981;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.download-btn:hover {
+    background-color: #10b981;
+    color: #0f172a;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
 }
