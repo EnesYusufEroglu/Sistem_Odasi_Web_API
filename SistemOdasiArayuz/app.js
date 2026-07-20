@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         max: 50,
         label: "°C",
         title: "Sıcaklık",
-        valueFontColor: "#f8fafc",
+        valueFontColor: "#f8fcfc",
         titleFontColor: "#94a3b8"
     });
 
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
         anlikVerileriGetir();
         const currentLimit = document.getElementById("data-limit-select").value;
         grafikVerileriniGuncelle(currentLimit);
-    }, 2000);
+    }, 1000);
 
     // --- CSV İNDİRME TETİKLEYİCİSİ ---
     document.getElementById("btn-download-csv").addEventListener("click", function () {
@@ -238,7 +238,7 @@ function anlikVerileriGetir() {
                 titleSicaklik.style.color = "#ef4444"; // Başlık Kırmızı
             } else {
                 cardSicaklik.classList.remove("analog-danger");
-                titleSicaklik.style.color = "#f8fafc"; // Başlık Varsayılan Beyaz/Gri
+                titleSicaklik.style.color = "#66e3ff"; // Başlık Varsayılan Turkuaz
             }
 
             // Nem Kartı
@@ -253,7 +253,7 @@ function anlikVerileriGetir() {
                 titleNem.style.color = "#fbbf24"; // Başlık Sarı/Turuncu
             } else {
                 cardNem.classList.remove("analog-warning");
-                titleNem.style.color = "#f8fafc";
+                titleNem.style.color = "#66e3ff";
             }
 
             // Gaz Kartı
@@ -268,7 +268,7 @@ function anlikVerileriGetir() {
                 titleGaz.style.color = "#ef4444"; // Başlık Kırmızı
             } else {
                 cardGaz.classList.remove("analog-danger");
-                titleGaz.style.color = "#f8fafc";
+                titleGaz.style.color = "#66e3ff";
             }
 
             // Enerji Kartı
@@ -285,7 +285,7 @@ function anlikVerileriGetir() {
                 titleEnerji.style.color = "#ef4444"; // Başlık Kırmızı
             } else {
                 cardEnerji.classList.remove("analog-danger");
-                titleEnerji.style.color = "#f8fafc";
+                titleEnerji.style.color = "#66e3ff";
             }
 
             // Hareket Kartı
@@ -302,7 +302,7 @@ function anlikVerileriGetir() {
                 titleHareket.style.color = "#ef4444"; // Başlık Kırmızı
             } else {
                 cardHareket.classList.remove("analog-danger");
-                titleHareket.style.color = "#f8fafc";
+                titleHareket.style.color = "#66e3ff";
             }
 
             // Klima Kartı
@@ -319,7 +319,7 @@ function anlikVerileriGetir() {
                 titleKlima.style.color = "#ef4444"; // Başlık Kırmızı
             } else {
                 cardKlima.classList.remove("analog-danger");
-                titleKlima.style.color = "#f8fafc";
+                titleKlima.style.color = "#66e3ff";
             }
 
             // 3. DİJİTAL TABLOYU GÜNCELLE
@@ -339,7 +339,7 @@ function anlikVerileriGetir() {
             document.getElementById("table-energy-status").textContent = analizEnerji.tableText;
             document.getElementById("table-energy-status").className = analizEnerji.cls;
 
-            document.getElementById("table-movement").textContent = data.hareketVarMi ? "HAREKET VAR" : "SAKİN";
+            document.getElementById("table-movement").textContent = data.hareketVarMi ? "HAREKET ALGILANDI" : "Güvenli";
             document.getElementById("table-movement-status").textContent = analizHareket.tableText;
             document.getElementById("table-movement-status").className = analizHareket.cls;
 
@@ -427,7 +427,7 @@ function durumAnaliziYap(tip, veri, sicaklik) {
                 return {
                     alarm: true,
                     tableText: `⚠️ LİMİT DIŞI (> ${thresholds.tempMax}°C)`,
-                    cardText: `Kritik Sıcaklık (> ${thresholds.tempMax}°C)`,
+                    cardText: `KRİTİK SICAKLIK (> ${thresholds.tempMax}°C)`,
                     cls: "text-red-alarm"
                 };
             }
@@ -437,8 +437,8 @@ function durumAnaliziYap(tip, veri, sicaklik) {
             if (veri < thresholds.humMin || veri > thresholds.humMax) {
                 return {
                     warning: true,
-                    tableText: `⚠️ Limit Dışı (< ${thresholds.humMin}% veya > ${thresholds.humMax}%)`,
-                    cardText: "Nem Limit Dışı!",
+                    tableText: `⚠️ LİMİT DIŞI (< ${thresholds.humMin}% veya > ${thresholds.humMax}%)`,
+                    cardText: "NEM LİMİT DIŞI!",
                     cls: "text-yellow-alarm"
                 };
             }
@@ -477,8 +477,8 @@ function durumAnaliziYap(tip, veri, sicaklik) {
             if (veri) {
                 return {
                     alarm: true,
-                    tableText: "🚨 Yetkisiz Giriş / Aktivite!",
-                    cardText: "İÇERİDE HAREKET ALGILANDI!",
+                    tableText: "🚨 YETKİSİZ GİRİŞ!",
+                    cardText: "HAREKET ALGILANDI!",
                     cls: "text-red-alarm"
                 };
             }
@@ -491,7 +491,7 @@ function durumAnaliziYap(tip, veri, sicaklik) {
                     tableText: "✅ Çalışıyor",
                     cardText: "Klima Aktif (Soğutuyor)",
                     cls: "text-green-stable",
-                    display: "AÇIK"
+                    display: "Açık"
                 };
             }
             if (sicaklik > thresholds.tempMax) {
