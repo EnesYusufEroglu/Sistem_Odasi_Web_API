@@ -228,49 +228,99 @@ function anlikVerileriGetir() {
             // 2. ANALOG KARTLARI GÜNCELLE
             // Sıcaklık Kartı
             const cardSicaklik = document.getElementById("card-sicaklik");
-            if (analizTemp.alarm) cardSicaklik.classList.add("analog-danger");
-            else cardSicaklik.classList.remove("analog-danger");
+            const textSicaklik = document.getElementById("text-sicaklik");
+            const titleSicaklik = cardSicaklik.querySelector("h3"); // Başlığı yakaladık
+
+            textSicaklik.textContent = analizTemp.cardText;
+            textSicaklik.style.color = analizTemp.alarm ? "#ef4444" : "#10b981";
+            if (analizTemp.alarm) {
+                cardSicaklik.classList.add("analog-danger");
+                titleSicaklik.style.color = "#ef4444"; // Başlık Kırmızı
+            } else {
+                cardSicaklik.classList.remove("analog-danger");
+                titleSicaklik.style.color = "#f8fafc"; // Başlık Varsayılan Beyaz/Gri
+            }
 
             // Nem Kartı
             const cardNem = document.getElementById("card-nem");
-            if (analizNem.warning) cardNem.classList.add("analog-warning");
-            else cardNem.classList.remove("analog-warning");
+            const textNem = document.getElementById("text-nem");
+            const titleNem = cardNem.querySelector("h3");
+
+            textNem.textContent = analizNem.cardText;
+            textNem.style.color = analizNem.warning ? "#fbbf24" : "#10b981";
+            if (analizNem.warning) {
+                cardNem.classList.add("analog-warning");
+                titleNem.style.color = "#fbbf24"; // Başlık Sarı/Turuncu
+            } else {
+                cardNem.classList.remove("analog-warning");
+                titleNem.style.color = "#f8fafc";
+            }
 
             // Gaz Kartı
             const cardGaz = document.getElementById("card-gaz");
-            if (analizGaz.alarm) cardGaz.classList.add("analog-danger");
-            else cardGaz.classList.remove("analog-danger");
+            const textGaz = document.getElementById("text-gaz");
+            const titleGaz = cardGaz.querySelector("h3");
+
+            textGaz.textContent = analizGaz.cardText;
+            textGaz.style.color = analizGaz.alarm ? "#ef4444" : "#10b981";
+            if (analizGaz.alarm) {
+                cardGaz.classList.add("analog-danger");
+                titleGaz.style.color = "#ef4444"; // Başlık Kırmızı
+            } else {
+                cardGaz.classList.remove("analog-danger");
+                titleGaz.style.color = "#f8fafc";
+            }
 
             // Enerji Kartı
             const cardEnerji = document.getElementById("card-enerji");
             const iconEnerji = document.getElementById("icon-enerji");
             const textEnerji = document.getElementById("text-enerji");
+            const titleEnerji = cardEnerji.querySelector("h3");
+
             iconEnerji.textContent = data.enerjiVarMi ? "⚡" : "🔋";
-            textEnerji.textContent = analizEnerji.cardText; // Tamamen merkezi metin
+            textEnerji.textContent = analizEnerji.cardText;
             textEnerji.style.color = analizEnerji.alarm ? "#ef4444" : "#10b981";
-            if (analizEnerji.alarm) cardEnerji.classList.add("analog-danger");
-            else cardEnerji.classList.remove("analog-danger");
+            if (analizEnerji.alarm) {
+                cardEnerji.classList.add("analog-danger");
+                titleEnerji.style.color = "#ef4444"; // Başlık Kırmızı
+            } else {
+                cardEnerji.classList.remove("analog-danger");
+                titleEnerji.style.color = "#f8fafc";
+            }
 
             // Hareket Kartı
             const cardHareket = document.getElementById("card-hareket");
             const iconHareket = document.getElementById("icon-hareket");
             const textHareket = document.getElementById("text-hareket");
+            const titleHareket = cardHareket.querySelector("h3");
+
             iconHareket.textContent = data.hareketVarMi ? "🏃" : "🟢";
-            textHareket.textContent = analizHareket.cardText; // Tamamen merkezi metin
+            textHareket.textContent = analizHareket.cardText;
             textHareket.style.color = data.hareketVarMi ? "#ef4444" : "#10b981";
-            if (analizHareket.alarm) cardHareket.classList.add("analog-danger");
-            else cardHareket.classList.remove("analog-danger");
+            if (analizHareket.alarm) {
+                cardHareket.classList.add("analog-danger");
+                titleHareket.style.color = "#ef4444"; // Başlık Kırmızı
+            } else {
+                cardHareket.classList.remove("analog-danger");
+                titleHareket.style.color = "#f8fafc";
+            }
 
             // Klima Kartı
             const cardKlima = document.getElementById("card-klima");
             const iconKlima = document.getElementById("icon-klima");
             const textKlima = document.getElementById("text-klima");
-            iconKlima.textContent = data.klimaAcikMi ? "💨" : (analizKlima.alarm ? "⚠️" : "🛑");
-            textKlima.textContent = analizKlima.cardText; // Tamamen merkezi metin
-            textKlima.style.color = data.klimaAcikMi ? "#10b981" : (analizKlima.alarm ? "#ef4444" : "#94a3b8");
-            if (analizKlima.alarm) cardKlima.classList.add("analog-danger");
-            else cardKlima.classList.remove("analog-danger");
+            const titleKlima = cardKlima.querySelector("h3");
 
+            iconKlima.textContent = data.klimaAcikMi ? "❄️" : (analizKlima.alarm ? "⚠️" : "💤");
+            textKlima.textContent = analizKlima.cardText;
+            textKlima.style.color = data.klimaAcikMi ? "#10b981" : (analizKlima.alarm ? "#ef4444" : "#94a3b8");
+            if (analizKlima.alarm) {
+                cardKlima.classList.add("analog-danger");
+                titleKlima.style.color = "#ef4444"; // Başlık Kırmızı
+            } else {
+                cardKlima.classList.remove("analog-danger");
+                titleKlima.style.color = "#f8fafc";
+            }
 
             // 3. DİJİTAL TABLOYU GÜNCELLE
             document.getElementById("table-temp").textContent = `${data.sicaklik.toFixed(1)} °C`;
@@ -374,93 +424,93 @@ function durumAnaliziYap(tip, veri, sicaklik) {
     switch (tip) {
         case 'sicaklik':
             if (veri > thresholds.tempMax) {
-                return { 
-                    alarm: true, 
-                    tableText: `⚠️ LİMİT DIŞI (> ${thresholds.tempMax}°C)`, 
+                return {
+                    alarm: true,
+                    tableText: `⚠️ LİMİT DIŞI (> ${thresholds.tempMax}°C)`,
                     cardText: `Kritik Sıcaklık (> ${thresholds.tempMax}°C)`,
-                    cls: "text-red-alarm" 
+                    cls: "text-red-alarm"
                 };
             }
             return { alarm: false, tableText: "✅ Stabil", cardText: "Stabil / Normal", cls: "text-green-stable" };
-            
+
         case 'nem':
             if (veri < thresholds.humMin || veri > thresholds.humMax) {
-                return { 
-                    warning: true, 
-                    tableText: `⚠️ Limit Dışı (< ${thresholds.humMin}% veya > ${thresholds.humMax}%)`, 
+                return {
+                    warning: true,
+                    tableText: `⚠️ Limit Dışı (< ${thresholds.humMin}% veya > ${thresholds.humMax}%)`,
                     cardText: "Nem Limit Dışı!",
-                    cls: "text-yellow-alarm" 
+                    cls: "text-yellow-alarm"
                 };
             }
             return { alarm: false, tableText: "✅ Stabil", cardText: "Stabil / Normal", cls: "text-green-stable" };
-            
+
         case 'gaz':
             if (veri > thresholds.gasMax) {
-                return { 
-                    alarm: true, 
-                    tableText: `🚨 TEHLİKELİ SEVİYE (> ${thresholds.gasMax} PPM)`, 
+                return {
+                    alarm: true,
+                    tableText: `🚨 TEHLİKELİ SEVİYE (> ${thresholds.gasMax} PPM)`,
                     cardText: "TEHLİKELİ GAZ SIZINTISI!",
-                    cls: "text-red-alarm" 
+                    cls: "text-red-alarm"
                 };
             }
             return { alarm: false, tableText: "✅ Temiz", cardText: "Temiz / Güvenli", cls: "text-green-stable" };
-            
+
         case 'enerji':
             if (veri) {
-                return { 
-                    alarm: false, 
-                    tableText: "🔌 Kesintisiz", 
-                    cardText: "Şebeke (Kesintisiz)", 
-                    cls: "text-green-stable", 
-                    display: "Şebeke" 
+                return {
+                    alarm: false,
+                    tableText: "🔌 Kesintisiz",
+                    cardText: "Şebeke (Kesintisiz)",
+                    cls: "text-green-stable",
+                    display: "Şebeke"
                 };
             }
-            return { 
-                alarm: true, 
-                tableText: "🔋 ELEKTRİK KESİNTİSİ!", 
-                cardText: "JENERATÖR / UPS DEVREDE!", 
-                cls: "text-red-alarm", 
-                display: "UPS / Jeneratör" 
+            return {
+                alarm: true,
+                tableText: "🔋 ELEKTRİK KESİNTİSİ!",
+                cardText: "JENERATÖR / UPS DEVREDE!",
+                cls: "text-red-alarm",
+                display: "UPS / Jeneratör"
             };
-            
+
         case 'hareket':
             if (veri) {
-                return { 
-                    alarm: true, 
-                    tableText: "🚨 Yetkisiz Giriş / Aktivite!", 
-                    cardText: "İÇERİDE HAREKET ALGILANDI!", 
-                    cls: "text-red-alarm" 
+                return {
+                    alarm: true,
+                    tableText: "🚨 Yetkisiz Giriş / Aktivite!",
+                    cardText: "İÇERİDE HAREKET ALGILANDI!",
+                    cls: "text-red-alarm"
                 };
             }
             return { alarm: false, tableText: "✅ Güvenli", cardText: "Oda Boş / Güvenli", cls: "text-green-stable" };
-            
+
         case 'klima':
             if (veri) {
-                return { 
-                    alarm: false, 
-                    tableText: "✅ Çalışıyor", 
-                    cardText: "Klima Aktif (Soğutuyor)", 
-                    cls: "text-green-stable", 
-                    display: "AÇIK" 
+                return {
+                    alarm: false,
+                    tableText: "✅ Çalışıyor",
+                    cardText: "Klima Aktif (Soğutuyor)",
+                    cls: "text-green-stable",
+                    display: "AÇIK"
                 };
             }
             if (sicaklik > thresholds.tempMax) {
-                return { 
-                    alarm: true, 
-                    tableText: "🚨 RİSK: YÜKSEK SICAKLIK & KLİMA KAPALI!", 
-                    cardText: "KAPALI / SICAKLIK KRİTİK!", 
-                    cls: "text-red-alarm", 
-                    display: "KAPALI" 
+                return {
+                    alarm: true,
+                    tableText: "🚨 RİSK: YÜKSEK SICAKLIK & KLİMA KAPALI!",
+                    cardText: "KAPALI / SICAKLIK KRİTİK!",
+                    cls: "text-red-alarm",
+                    display: "KAPALI"
                 };
             }
-            return { 
-                alarm: false, 
+            return {
+                alarm: false,
                 tableText: "💤 Beklemede",
-                cardText: "Kapalı", 
-                cls: "text-green-stable", 
-                display: "KAPALI" 
+                cardText: "Kapalı",
+                cls: "text-green-stable",
+                display: "KAPALI"
             };
-            
+
         default:
             return { alarm: false, tableText: "--", cardText: "--", cls: "" };
     }
