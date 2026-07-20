@@ -239,7 +239,7 @@ function anlikVerileriGetir() {
                 cardGaz.classList.remove("analog-danger");
             }
 
-            // --- YENİ KART: ENERJİ DURUMU GÜNCELLEMESİ ---
+            // --- KART: ENERJİ DURUMU GÜNCELLEMESİ ---
             const cardEnerji = document.getElementById("card-enerji");
             const iconEnerji = document.getElementById("icon-enerji");
             const textEnerji = document.getElementById("text-enerji");
@@ -256,24 +256,24 @@ function anlikVerileriGetir() {
                 cardEnerji.classList.add("analog-danger"); // Kırmızı flaşör alarmını başlat
             }
 
-            // --- YENİ KART: KAPI DURUMU GÜNCELLEMESİ ---
-            const cardKapi = document.getElementById("card-kapi");
-            const iconKapi = document.getElementById("icon-kapi");
-            const textKapi = document.getElementById("text-kapi");
+            // --- KART: HAREKET DURUMU GÜNCELLEMESİ ---
+            const cardHareket = document.getElementById("card-hareket");
+            const iconHareket = document.getElementById("icon-hareket");
+            const textHareket = document.getElementById("text-hareket");
 
-            if (data.kapiAcikMi === true) {
-                iconKapi.textContent = "🚨"; // İkonu alarma dönüştür
-                textKapi.textContent = "AÇIK (GÜVENLİK İHLALİ)";
-                textKapi.style.color = "#ef4444";
-                cardKapi.classList.add("analog-danger"); // Kırmızı flaşör alarmını başlat
+            if (data.hareketVarMi === true) {
+                iconHareket.textContent = "🏃"; // Koşan insan emojisi
+                textHareket.textContent = "İÇERİDE HAREKET ALGILANDI!";
+                textHareket.style.color = "#ef4444";
+                cardHareket.classList.add("analog-danger"); // Kırmızı flaşör alarmı başlasın!
             } else {
-                iconKapi.textContent = "🚪";
-                textKapi.textContent = "Güvenli";
-                textKapi.style.color = "#10b981";
-                cardKapi.classList.remove("analog-danger");
+                iconHareket.textContent = "🟢"; // Sakin yeşil daire
+                textHareket.textContent = "Oda Boş / Güvenli";
+                textHareket.style.color = "#10b981";
+                cardHareket.classList.remove("analog-danger");
             }
 
-            // --- YENİ KART: KLİMA DURUMU GÜNCELLEMESİ ---
+            // --- KART: KLİMA DURUMU GÜNCELLEMESİ ---
             const cardKlima = document.getElementById("card-klima");
             const iconKlima = document.getElementById("icon-klima");
             const textKlima = document.getElementById("text-klima");
@@ -285,7 +285,7 @@ function anlikVerileriGetir() {
                 cardKlima.classList.remove("analog-danger");
             } else {
                 iconKlima.textContent = "💨";
-                
+
                 // Akıllı Alarm Modu: Sıcaklık yüksek ama klima kapalıysa tehlikeyi vurgula
                 if (data.sicaklik > thresholds.tempMax) {
                     textKlima.textContent = "KAPALI / SICAKLIK KRİTİK!";
@@ -299,7 +299,7 @@ function anlikVerileriGetir() {
             }
 
             // --- DİJİTAL TABLO GÜNCELLEMELERİ ---
-            // -- DİJİTAL TABLO SICAKLIK DURUMU GÜNCELLEMESİ ---
+            // -- TABLO SICAKLIK DURUMU GÜNCELLEMESİ ---
             document.getElementById("table-temp").textContent = `${data.sicaklik.toFixed(1)} °C`;
             const tempStatus = document.getElementById("table-temp-status");
             if (data.sicaklik > thresholds.tempMax) {
@@ -310,7 +310,7 @@ function anlikVerileriGetir() {
                 tempStatus.className = "text-green-stable";
             }
 
-            // -- DİJİTAL TABLO NEM DURUMU GÜNCELLEMESİ ---
+            // -- TABLO NEM DURUMU GÜNCELLEMESİ ---
             document.getElementById("table-hum").textContent = `${data.nem.toFixed(1)} %`;
             const humStatus = document.getElementById("table-hum-status");
             if (data.nem < thresholds.humMin || data.nem > thresholds.humMax) {
@@ -321,7 +321,7 @@ function anlikVerileriGetir() {
                 humStatus.className = "text-green-stable";
             }
 
-            // -- DİJİTAL TABLO GAZ DURUMU GÜNCELLEMESİ ---
+            // -- TABLO GAZ DURUMU GÜNCELLEMESİ ---
             document.getElementById("table-gas").textContent = `${data.gaz} PPM`;
             const gasStatus = document.getElementById("table-gas-status");
             if (data.gaz > thresholds.gasMax) {
@@ -332,7 +332,7 @@ function anlikVerileriGetir() {
                 gasStatus.className = "text-green-stable";
             }
 
-            // -- DİJİTAL TABLO ENERJİ DURUMU GÜNCELLEMESİ ---
+            // -- TABLO ENERJİ DURUMU GÜNCELLEMESİ ---
             const tableEnergy = document.getElementById("table-energy");
             const tableEnergyStatus = document.getElementById("table-energy-status");
             if (data.enerjiVarMi) {
@@ -345,23 +345,23 @@ function anlikVerileriGetir() {
                 tableEnergyStatus.className = "text-red-alarm";
             }
 
-            // -- DİJİTAL TABLO KAPI DURUMU GÜNCELLEMESİ ---
-            const tableDoor = document.getElementById("table-door");
-            const tableDoorStatus = document.getElementById("table-door-status");
-            if (data.kapiAcikMi) {
-                tableDoor.textContent = "KAPI AÇIK";
-                tableDoorStatus.textContent = "🚨 HAREKET ALGILANDI!";
-                tableDoorStatus.className = "text-red-alarm";
+            // --- TABLO: HAREKET DURUMU GÜNCELLEMESİ ---
+            const tableMovement = document.getElementById("table-movement");
+            const tableMovementStatus = document.getElementById("table-movement-status");
+            if (data.hareketVarMi) {
+                tableMovement.textContent = "HAREKET VAR";
+                tableMovementStatus.textContent = "🚨 Yetkisiz Giriş / Aktivite!";
+                tableMovementStatus.className = "text-red-alarm";
             } else {
-                tableDoor.textContent = "KAPALI";
-                tableDoorStatus.textContent = "✅ Güvenli";
-                tableDoorStatus.className = "text-green-stable";
+                tableMovement.textContent = "SAKİN";
+                tableMovementStatus.textContent = "✅ Güvenli";
+                tableMovementStatus.className = "text-green-stable";
             }
 
-            // --- DİJİTAL TABLO KLİMA DURUMU GÜNCELLEMESİ ---
+            // --- TABLO KLİMA DURUMU GÜNCELLEMESİ ---
             const tableKlima = document.getElementById("table-klima");
             const tableKlimaStatus = document.getElementById("table-klima-status");
-            
+
             if (data.klimaAcikMi) {
                 tableKlima.textContent = "AÇIK";
                 tableKlimaStatus.textContent = "✅ Çalışıyor";
