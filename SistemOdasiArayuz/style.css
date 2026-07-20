@@ -120,14 +120,23 @@ header p {
     }
 }
 
+/* --- KART DÜZENİ OPTİMİZASYONU --- */
 .card {
     background-color: #0f172a;
     border: 1px solid #334155;
     border-radius: 12px;
     padding: 20px;
+    
+    /* İçerikleri dikey eksende kusursuz ortalamak için Flexbox ekledik */
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* Yatayda tam ortalar */
+    justify-content: center;   /* Dikeyde tam ortalar */
+    
     text-align: center;
     transition: transform 0.2s;
     font-size: 1.5rem;
+    height: 100%;              /* Grid içindeki yüksekliği eşitler */
 }
 
 .card:hover {
@@ -139,9 +148,13 @@ header p {
     margin-bottom: 15px;
 }
 
+/* --- GAUGE (KADRAN) SABİTLEME --- */
 .gauge {
     width: 100%;
-    height: 160px;
+    max-width: 240px;          /* Kadranın aşırı büyümesini engellemek için genişliği sabitledik */
+    height: 160px;             /* Yüksekliği kilitledik */
+    margin: 0 auto;            /* Yatay hizalamayı garanti altına aldık */
+    display: block;
 }
 
 .unit {
@@ -264,7 +277,7 @@ footer {
 .digital-table th, .digital-table td {
     padding: 14px 20px;
     border-bottom: 1px solid #1e293b;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     /* Hücre içindeki uzun yazılar sığmazsa taşmasın, alt satıra geçsin veya gizlensin */
     word-wrap: break-word; 
     overflow: hidden;
@@ -272,15 +285,15 @@ footer {
 
 /* 3 Sütunun genişlik oranlarını tam olarak sabitliyoruz (Toplamı %100 yapacak şekilde) */
 .digital-table th:nth-child(1), .digital-table td:nth-child(1) {
-    width: 30%; /* Parametre adı sütunu */
+    width: 35%; /* Parametre adı sütunu */
 }
 
 .digital-table th:nth-child(2), .digital-table td:nth-child(2) {
-    width: 20%; /* Anlık değer sütunu */
+    width: 25%; /* Anlık değer sütunu */
 }
 
 .digital-table th:nth-child(3), .digital-table td:nth-child(3) {
-    width: 50%; /* Durum / Eşik uyarı sütunu (En uzun metin buraya geleceği için payı yüksek) */
+    width: 70%; /* Durum / Eşik uyarı sütunu (En uzun metin buraya geleceği için payı yüksek) */
 }
 
 .digital-table th {
