@@ -21,13 +21,16 @@
             <div id="door-badge" class="door-badge checking-door">🚪 Kapı: Kontrol Ediliyor</div>
         </div>
 
+        <!-- Görünüm ve Ayar Değiştirme Paneli -->
         <div class="view-switcher-container">
             <button id="btn-analog" class="switcher-btn active">📊 Analog Göstergeler</button>
             <button id="btn-digital" class="switcher-btn">📋 Dijital Liste</button>
+            <button id="btn-settings" class="switcher-btn">⚙️ Eşik Ayarları</button>
         </div>
 
+        <!-- 3'lü Gösterge Paneli, Dijital Liste ve Ayarlar -->
         <main class="dashboard-grid">
-            <!-- Analog Kartlar (Seçimi kolaylaştırmak için id'ler eklendi) -->
+            <!-- Analog Kartlar (Mevcut olanlar) -->
             <div class="card analog-view" id="card-sicaklik">
                 <h3>Sıcaklık</h3>
                 <div id="gauge-sicaklik" class="gauge"></div>
@@ -46,6 +49,7 @@
                 <div class="unit">PPM</div>
             </div>
 
+            <!-- Dijital Liste Görünümü -->
             <div class="card digital-view-container hidden">
                 <h3>Anlık Dijital Veri Listesi</h3>
                 <div class="table-wrapper">
@@ -54,7 +58,7 @@
                             <tr>
                                 <th>Parametre</th>
                                 <th>Değer</th>
-                                <th>Durum</th>
+                                <th>Durum / Eşik</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,6 +90,33 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <!-- YENİ: Eşik Değer Ayarları Kartı (Varsayılan olarak gizli) -->
+            <div class="card settings-view-container hidden" id="settings-card">
+                <h3>⚠️ Kritik Eşik Değer Ayarları</h3>
+                <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Alarmların hangi değerlerde
+                    tetikleneceğini buradan belirleyebilirsiniz.</p>
+
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <label for="input-temp-max">Maksimum Sıcaklık (°C):</label>
+                        <input type="number" id="input-temp-max" step="0.5">
+                    </div>
+                    <div class="setting-group">
+                        <label for="input-hum-min">Minimum Nem (%):</label>
+                        <input type="number" id="input-hum-min">
+                    </div>
+                    <div class="setting-group">
+                        <label for="input-hum-max">Maksimum Nem (%):</label>
+                        <input type="number" id="input-hum-max">
+                    </div>
+                    <div class="setting-group">
+                        <label for="input-gas-max">Maksimum Gaz (PPM):</label>
+                        <input type="number" id="input-gas-max">
+                    </div>
+                </div>
+                <button id="btn-save-settings" class="save-btn">Kaydet ve Uygula</button>
             </div>
 
             <div class="card chart-card">

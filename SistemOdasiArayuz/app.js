@@ -4,28 +4,29 @@ const API_HISTORY_BASE_URL = "https://localhost:7014/api/Veri/gecmis";
 let gaugeSicaklik, gaugeNem, gaugeGaz;
 let historyChart;
 
+// --- GLOBAL DİNAMİK EŞİK DEĞERLERİ ---
+let thresholds = {
+    tempMax: 28.0,
+    humMin: 30.0,
+    humMax: 70.0,
+    gasMax: 300
+};
+
 document.addEventListener("DOMContentLoaded", function() {
-    // --- GÖRÜNÜM DEĞİŞTİRME MANTIĞI ---
-    const btnAnalog = document.getElementById("btn-analog");
-    const btnDigital = document.getElementById("btn-digital");
-    const analogViews = document.querySelectorAll(".analog-view");
-    const digitalView = document.querySelector(".digital-view-container");
-
-    btnAnalog.addEventListener("click", () => {
-        btnAnalog.classList.add("active");
-        btnDigital.classList.remove("active");
-        analogViews.forEach(el => el.classList.remove("hidden"));
-        digitalView.classList.add("hidden");
-    });
-
-    btnDigital.addEventListener("click", () => {
-        btnDigital.classList.add("active");
-        btnAnalog.classList.remove("active");
-        analogViews.forEach(el => el.classList.add("hidden"));
-        digitalView.classList.remove("hidden");
-    });
     
-    // Göstergeleri Başlat
+    // 1. LocalStorage'dan eşik değerleri yükle (Varsa)
+    const savedThresholds = localStorage.getItem("system_thresholds");
+    if (savedThresholds) {
+        thresholds = JSON.parse(savedThresholds);
+    }
+
+    // Input alanlarını mevcut ayarlarla doldur
+    document.getElementById("input-temp-max").value = thresholds.tempMax;
+    document.getElementById("input-hum-min").value = thresholds.humMin;
+    document.getElementById("input-hum-max").value = thresholds.humMax;
+    document.getElementById("input-gas-max").value = thresholds.gasMax;
+
+    // 2. GÖSTERGELERİ (GAUGE) BAŞLAT
     gaugeSicaklik = new JustGage({
         id: "gauge-sicaklik",
         value: 0,
@@ -62,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
         levelColors: ["#10b981", "#f59e0b", "#ef4444"]
     });
 
-    // Grafik Tanımı
+    // 3. GRAFİK OLUŞTURMA
     const ctx = document.getElementById('historyChart').getContext('2d');
     historyChart = new Chart(ctx, {
         type: 'line',
@@ -111,6 +112,72 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    // 4. GÖRÜNÜM GEÇİŞ MANTIĞI (GÜNCELLENDİ)
+    const btnAnalog = document.getElementById("btn-analog");
+    const btnDigital = document.getElementById("btn-digital");
+    const btnSettings = document.getElementById("btn-settings");
+    
+    const analogViews = document.querySelectorAll(".analog-view");
+    const digitalView = document.querySelector(".digital-view-container");
+    const settingsView = document.getElementById("settings-card");
+
+    btnAnalog.addEventListener("click", () => {
+        btnAnalog.classList.add("active");
+        btnDigital.classList.remove("active");
+        btnSettings.classList.remove("active");
+        analogViews.forEach(el => el.classList.remove("hidden"));
+        digitalView.classList.add("hidden");
+        settingsView.classList.add("hidden");
+    });
+
+    btnDigital.addEventListener("click", () => {
+        btnDigital.classList.add("active");
+        btnAnalog.classList.remove("active");
+        btnSettings.classList.remove("active");
+        analogViews.forEach(el => el.classList.add("hidden"));
+        digitalView.classList.remove("hidden");
+        settingsView.classList.add("hidden");
+    });
+
+    btnSettings.addEventListener("click", () => {
+        btnSettings.classList.add("active");
+        btnAnalog.classList.remove("active");
+        btnDigital.classList.remove("active");
+        analogViews.forEach(el => el.classList.add("hidden"));
+        digitalView.classList.add("hidden");
+        settingsView.classList.remove("hidden");
+    });
+
+    // 5. AYARLARI KAYDETME TETİKLEYİCİSİ
+    document.getElementById("btn-save-settings").addEventListener("click", () => {
+        const tempMaxVal = parseFloat(document.getElementById("input-temp-max").value);
+        const humMinVal = parseFloat(document.getElementById("input-hum-min").value);
+        const humMaxVal = parseFloat(document.getElementById("input-hum-max").value);
+        const gasMaxVal = parseInt(document.getElementById("input-gas-max").value);
+
+        if (isNaN(tempMaxVal) || isNaN(humMinVal) || isNaN(humMaxVal) || isNaN(gasMaxVal)) {
+            alert("Lütfen tüm alanları geçerli sayılarla doldurun!");
+            return;
+        }
+
+        // Değerleri güncelle
+        thresholds.tempMax = tempMaxVal;
+        thresholds.humMin = humMinVal;
+        thresholds.humMax = humMaxVal;
+        thresholds.gasMax = gasMaxVal;
+
+        // Tarayıcı belleğine kaydet
+        localStorage.setItem("system_thresholds", JSON.stringify(thresholds));
+        
+        // Arayüzü hemen güncelle
+        anlikVerileriGetir();
+        
+        alert("Eşik değerleri başarıyla güncellendi ve kaydedildi!");
+        
+        // Analog ekrana geri dön
+        btnAnalog.click();
+    });
+
     const selectElement = document.getElementById("data-limit-select");
     selectElement.addEventListener("change", function() {
         grafikVerileriniGuncelle(this.value);
@@ -143,27 +210,27 @@ function anlikVerileriGetir() {
             gaugeNem.refresh(data.nem);
             gaugeGaz.refresh(data.gaz);
 
-            // --- ANALOG KART DİNAMİK ALARM KONTROLLERİ ---
+            // --- ANALOG KART DİNAMİK ALARM KONTROLLERİ (EŞİKLER DİNAMİK YAPILDI) ---
             const cardSicaklik = document.getElementById("card-sicaklik");
             const cardNem = document.getElementById("card-nem");
             const cardGaz = document.getElementById("card-gaz");
 
-            // Sıcaklık Kontrolü (> 28°C ise Alarm)
-            if (data.sicaklik > 28) {
+            // Sıcaklık Kontrolü
+            if (data.sicaklik > thresholds.tempMax) {
                 cardSicaklik.classList.add("analog-danger");
             } else {
                 cardSicaklik.classList.remove("analog-danger");
             }
 
-            // Nem Kontrolü (< 30% veya > 70% ise Uyarı)
-            if (data.nem > 70 || data.nem < 30) {
+            // Nem Kontrolü
+            if (data.nem < thresholds.humMin || data.nem > thresholds.humMax) {
                 cardNem.classList.add("analog-warning");
             } else {
                 cardNem.classList.remove("analog-warning");
             }
 
-            // Gaz Kontrolü (> 300 PPM ise Alarm)
-            if (data.gaz > 300) {
+            // Gaz Kontrolü
+            if (data.gaz > thresholds.gasMax) {
                 cardGaz.classList.add("analog-danger");
             } else {
                 cardGaz.classList.remove("analog-danger");
@@ -178,7 +245,7 @@ function anlikVerileriGetir() {
                 energyBadge.textContent = "⚡ Enerji: Jeneratör";
             }
 
-            // --- KAPİ DURUMU ROZET GÜNCELLEMESİ (YENİ) ---
+            // --- KAPİ DURUMU ROZET GÜNCELLEMESİ ---
             const doorBadge = document.getElementById("door-badge");
             if (data.kapiAcikMi === true) {
                 doorBadge.className = "door-badge door-open";
@@ -188,15 +255,12 @@ function anlikVerileriGetir() {
                 doorBadge.textContent = "🚪 Kapı: Kilitli";
             }
 
-            const tarih = new Date(data.kayitTarihi);
-            document.getElementById("last-update").textContent = tarih.toLocaleTimeString();
-
-        // --- DİJİTAL TABLO GÜNCELLEMELERİ (HAREKETLİ VE RENKLİ ALARMLAR) ---
+            // --- DİJİTAL TABLO GÜNCELLEMELERİ (EŞİKLER DİNAMİK YAPILDI) ---
             document.getElementById("table-temp").textContent = `${data.sicaklik.toFixed(1)} °C`;
             const tempStatus = document.getElementById("table-temp-status");
-            if (data.sicaklik > 28) {
-                tempStatus.textContent = "⚠️ YÜKSEK SICAKLIK ALARMI";
-                tempStatus.className = "text-red-alarm"; // Sallanan ve parlayan kırmızı alarm
+            if (data.sicaklik > thresholds.tempMax) {
+                tempStatus.textContent = `⚠️ LİMİT DIŞI (> ${thresholds.tempMax}°C)`;
+                tempStatus.className = "text-red-alarm";
             } else {
                 tempStatus.textContent = "✅ Stabil";
                 tempStatus.className = "text-green-stable";
@@ -204,9 +268,9 @@ function anlikVerileriGetir() {
 
             document.getElementById("table-hum").textContent = `${data.nem.toFixed(1)} %`;
             const humStatus = document.getElementById("table-hum-status");
-            if (data.nem > 70 || data.nem < 30) {
-                humStatus.textContent = "⚠️ Limit Dışı Uyarı";
-                humStatus.className = "text-yellow-alarm"; // Parlayan turuncu uyarı
+            if (data.nem < thresholds.humMin || data.nem > thresholds.humMax) {
+                humStatus.textContent = `⚠️ Limit Dışı (< ${thresholds.humMin}% veya > ${thresholds.humMax}%)`;
+                humStatus.className = "text-yellow-alarm";
             } else {
                 humStatus.textContent = "✅ Stabil";
                 humStatus.className = "text-green-stable";
@@ -214,9 +278,9 @@ function anlikVerileriGetir() {
 
             document.getElementById("table-gas").textContent = `${data.gaz} PPM`;
             const gasStatus = document.getElementById("table-gas-status");
-            if (data.gaz > 300) {
-                gasStatus.textContent = "🚨 TEHLİKELİ GAZ/DUMAN SIZINTISI";
-                gasStatus.className = "text-red-alarm"; // Sallanan ve parlayan kırmızı alarm
+            if (data.gaz > thresholds.gasMax) {
+                gasStatus.textContent = `🚨 TEHLİKELİ SEVİYE (> ${thresholds.gasMax} PPM)`;
+                gasStatus.className = "text-red-alarm";
             } else {
                 gasStatus.textContent = "✅ Temiz";
                 gasStatus.className = "text-green-stable";
@@ -231,22 +295,23 @@ function anlikVerileriGetir() {
             } else {
                 tableEnergy.textContent = "UPS / Jeneratör";
                 tableEnergyStatus.textContent = "🔋 ELEKTRİK KESİNTİSİ!";
-                tableEnergyStatus.className = "text-red-alarm"; // Elektrik gidince titreşen alarm
+                tableEnergyStatus.className = "text-red-alarm";
             }
 
-            // --- TABLO KAPİ DURUMU GÜNCELLEMESİ (HAREKETLİ) ---
             const tableDoor = document.getElementById("table-door");
             const tableDoorStatus = document.getElementById("table-door-status");
             if (data.kapiAcikMi) {
                 tableDoor.textContent = "AÇIK";
-                tableDoorStatus.textContent = "🚨 KAPALI OLMALIDIR / YETKİSİZ GİRİŞ!";
-                tableDoorStatus.className = "text-red-alarm"; // Kapı açık unutulursa titreşen alarm
+                tableDoorStatus.textContent = "🚨 GÜVENLİK İHLALİ!";
+                tableDoorStatus.className = "text-red-alarm";
             } else {
                 tableDoor.textContent = "KAPALI";
                 tableDoorStatus.textContent = "✅ Güvenli";
                 tableDoorStatus.className = "text-green-stable";
             }
-            // -------------------------------------
+
+            const tarih = new Date(data.kayitTarihi);
+            document.getElementById("last-update").textContent = tarih.toLocaleTimeString();
         })
         .catch(error => {
             statusBadge.textContent = "BAĞLANTI HATASI / VERİ YOK";
