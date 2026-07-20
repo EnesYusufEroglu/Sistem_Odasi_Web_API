@@ -329,40 +329,42 @@ footer {
     text-shadow: 0 0 5px rgba(16, 185, 129, 0.2);
 }
 
-/* --- ANALOG KART GERÇEK FLAŞÖR (YANIP SÖNME) EFEKTLERİ --- */
+/* --- ANALOG KART ALARM VE UYARI EFEKTLERİ --- */
 
-/* Kritik Tehlike Flaşörü (Kırmızı - Sıcaklık > 28 veya Gaz > 300) */
+/* Kritik Tehlike Durumu (Sıcaklık > 28 veya Gaz > 300) */
 .card.analog-danger {
-    animation: analog-danger-flash 0.8s infinite !important; /* 0.8 saniyede bir keskin flaş yapar */
+    border-color: #ef4444 !important;
+    background-color: rgba(239, 68, 68, 0.08) !important;
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.4) !important;
+    animation: analog-danger-glow 1s infinite alternate !important;
 }
 
-@keyframes analog-danger-flash {
-    0%, 100% {
-        border-color: #334155;
-        background-color: #0f172a;
-        box-shadow: none;
+@keyframes analog-danger-glow {
+    0% {
+        border-color: rgba(239, 68, 68, 0.4);
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
     }
-    50% {
+    100% {
         border-color: #ef4444;
-        background-color: rgba(239, 68, 68, 0.25); /* Arka plan kırmızı dolgulanır */
-        box-shadow: 0 0 30px rgba(239, 68, 68, 0.8), inset 0 0 15px rgba(239, 68, 68, 0.4);
+        box-shadow: 0 0 30px rgba(239, 68, 68, 0.8), inset 0 0 15px rgba(239, 68, 68, 0.3);
     }
 }
 
-/* Limit Dışı Uyarı Flaşörü (Sarı/Turuncu - Nem Sınır Dışı) */
+/* Limit Dışı Uyarı Durumu (Nem 30-70 dışındaysa) */
 .card.analog-warning {
-    animation: analog-warning-flash 1.2s infinite !important; /* Biraz daha yavaş flaş yapar */
+    border-color: #fbbf24 !important;
+    background-color: rgba(251, 191, 36, 0.05) !important;
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.25) !important;
+    animation: analog-warning-glow 1.5s infinite alternate !important;
 }
 
-@keyframes analog-warning-flash {
-    0%, 100% {
-        border-color: #334155;
-        background-color: #0f172a;
-        box-shadow: none;
+@keyframes analog-warning-glow {
+    0% {
+        border-color: rgba(251, 191, 36, 0.3);
+        box-shadow: 0 0 8px rgba(251, 191, 36, 0.15);
     }
-    50% {
+    100% {
         border-color: #fbbf24;
-        background-color: rgba(251, 191, 36, 0.15); /* Arka plan sarı dolgulanır */
-        box-shadow: 0 0 25px rgba(251, 191, 36, 0.6), inset 0 0 10px rgba(251, 191, 36, 0.2);
+        box-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
     }
 }
