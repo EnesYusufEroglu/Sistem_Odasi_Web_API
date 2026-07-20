@@ -17,8 +17,6 @@
 
         <div class="status-strip">
             <div id="connection-status" class="status-badge checking">Bağlantı Kontrol Ediliyor...</div>
-            <div id="energy-badge" class="energy-badge checking-energy">⚡ Enerji: Kontrol Ediliyor</div>
-            <div id="door-badge" class="door-badge checking-door">🚪 Kapı: Kontrol Ediliyor</div>
         </div>
 
         <!-- Görünüm ve Ayar Değiştirme Paneli -->
@@ -30,23 +28,48 @@
 
         <!-- 3'lü Gösterge Paneli, Dijital Liste ve Ayarlar -->
         <main class="dashboard-grid">
-            <!-- Analog Kartlar (Mevcut olanlar) -->
+            <!-- Analog Kartlar -->
+            <!-- Sıcaklık Kartı -->
             <div class="card analog-view" id="card-sicaklik">
                 <h3>Sıcaklık</h3>
                 <div id="gauge-sicaklik" class="gauge"></div>
                 <div class="unit">°C</div>
             </div>
 
+            <!-- Nem Oranı Kartı -->
             <div class="card analog-view" id="card-nem">
                 <h3>Nem Oranı</h3>
                 <div id="gauge-nem" class="gauge"></div>
                 <div class="unit">%</div>
             </div>
 
+            <!-- Gaz Seviyesi Kartı -->
             <div class="card analog-view" id="card-gaz">
                 <h3>Gaz Seviyesi</h3>
                 <div id="gauge-gaz" class="gauge"></div>
                 <div class="unit">PPM</div>
+            </div>
+
+            <!-- Enerji Durumu Kartı -->
+            <div class="card analog-view" id="card-enerji">
+                <h3>Enerji Kaynağı</h3>
+                <div class="status-icon" id="icon-enerji">⚡</div>
+                <div class="unit" id="text-enerji" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...
+                </div>
+            </div>
+
+            <!-- Kapı / Giriş Durumu Kartı -->
+            <div class="card analog-view" id="card-kapi">
+                <h3>Hareket Durumu</h3>
+                <div class="status-icon" id="icon-kapi">🚪</div>
+                <div class="unit" id="text-kapi" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...</div>
+            </div>
+
+            <!-- YENİ: Klima Durumu Kartı -->
+            <div class="card analog-view" id="card-klima">
+                <h3>Soğutma Sistemi</h3>
+                <div class="status-icon" id="icon-klima">❄️</div>
+                <div class="unit" id="text-klima" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...</div>
             </div>
 
             <!-- Dijital Liste Görünümü -->
@@ -83,9 +106,14 @@
                                 <td id="table-energy-status">--</td>
                             </tr>
                             <tr>
-                                <td>🚪 Giriş / Kapı Güvenliği</td>
+                                <td>🚪 Hareket Durumu</td>
                                 <td id="table-door">--</td>
                                 <td id="table-door-status">--</td>
+                            </tr>
+                            <tr>
+                                <td>❄️ Soğutma Sistemi</td>
+                                <td id="table-klima">--</td>
+                                <td id="table-klima-status">--</td>
                             </tr>
                         </tbody>
                     </table>

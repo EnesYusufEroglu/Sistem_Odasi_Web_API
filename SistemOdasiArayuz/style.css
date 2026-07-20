@@ -1,43 +1,49 @@
+/* --- GENEL STİLLER --- */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; /* Tüm öğelerin varsayılan kenar boşluklarını sıfırlar */
+    padding: 0; /* Tüm öğelerin varsayılan dolgu boşluklarını sıfırlar */
+    box-sizing: border-box; /* Kenarlık ve dolgu dahil olmak üzere öğelerin boyutlarını daha öngörülebilir hale getirir */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Daha modern ve okunabilir bir yazı tipi */
 }
 
+/* --- BODY STİLLERİ --- */
 body {
-    background-color: #0f172a;
-    color: #f8fafc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+    background-color: #0f172a; /* Daha koyu bir arka plan rengi */
+    color: #f8fafc; /* Daha açık bir metin rengi */
+    display: flex; /* Flexbox kullanarak içerikleri ortalamak için */
+    justify-content: center; /* Yatayda ortalar */
+    align-items: center; /* Dikeyde ortalar */
+    min-height: 100vh; /* Tüm görünüm yüksekliğini kaplar */
+    padding: 20px; /* Ekran kenarlarından biraz boşluk bırakır */
 }
 
+/* --- KART VE KUTU STİLLERİ --- */
 .container {
-    width: 100%;
-    max-width: 1100px;
-    background-color: #1e293b;
-    border-radius: 16px;
-    padding: 30px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    width: 100%; /* Tüm genişliği kaplar */
+    max-width: 1100px; /* Maksimum genişlik sınırı */
+    background-color: #1e293b; /* Daha koyu bir kart arka plan rengi */
+    border-radius: 16px; /* Daha yuvarlatılmış köşeler */
+    padding: 30px; /* Kart içi boşluk */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Daha belirgin gölge efekti */
 }
 
+/* --- HEADER STİLLERİ --- */
 header {
-    text-align: center;
-    margin-bottom: 20px;
+    text-align: center; /* Başlık ve açıklamayı ortalar */
+    margin-bottom: 20px; /* Alt boşluk bırakır */
 }
 
+/* --- HEADER İÇERİK STİLLERİ --- */
 header h1 {
-    font-size: 2.2rem;
-    color: #38bdf8;
-    margin-bottom: 8px;
+    font-size: 2.2rem; /* Başlık boyutunu büyütür */
+    color: #38bdf8; /* Daha canlı bir mavi renk */
+    margin-bottom: 8px; /* Alt boşluk bırakır */
 }
 
+/* --- HEADER AÇIKLAMA STİLLERİ --- */
 header p {
-    color: #94a3b8;
-    font-size: 1rem;
+    color: #94a3b8; /* Daha yumuşak bir gri renk */
+    font-size: 1rem; /* Açıklama metni boyutu */
 }
 
 /* Durum Şeridi: İki rozeti alt alta veya yan yana dikeyde tam ortalar */
@@ -107,6 +113,7 @@ header p {
     padding: 20px;
     text-align: center;
     transition: transform 0.2s;
+    font-size: 1.5rem;
 }
 
 .card:hover {
@@ -114,8 +121,8 @@ header p {
 }
 
 .card h3 {
-    font-size: 1.2rem;
-    color: #94a3b8;
+    font-size: 1.5rem;
+    color: #66e3ff;
     margin-bottom: 15px;
 }
 
@@ -127,7 +134,7 @@ header p {
 .unit {
     margin-top: 5px;
     font-weight: bold;
-    color: #64748b;
+    color: #66e3ff;
 }
 
 /* Grafik Alanı */
@@ -260,7 +267,7 @@ footer {
 
 /* --- ACİL DURUM VE ALARM STİLLERİ --- */
 
-/* 1. Kritik Tehlike Rozetleri İçin Yanıp Sönen (Pulse + Glow) Efekti */
+/* Kritik Tehlike Rozetleri İçin Yanıp Sönme Efekti */
 .door-badge.door-open,
 .energy-badge.energy-fail {
     font-size: 1rem !important; /* Yazı boyutunu büyüttük */
@@ -290,7 +297,7 @@ footer {
     }
 }
 
-/* 2. Dijital Tablodaki Tehlike Metinleri İçin Ekranı Sallayan Dikkat Çekici Animasyon */
+/* Dijital Tablodaki Tehlike Metinleri İçin Ekranı Sallayan Dikkat Çekici Animasyon */
 .text-red-alarm {
     color: #ff4545;
     font-weight: 900;
@@ -309,12 +316,13 @@ footer {
     100% { transform: translate(0, 0); }
 }
 
-/* 3. Dijital Tablodaki Sarı Limit Dışı Uyarıları İçin Yavaşça Parlayan Turuncu Efekt */
+/* Dijital Tablodaki Sarı Limit Dışı Uyarıları İçin Yavaşça Parlayan Turuncu Efekt */
 .text-yellow-alarm {
     color: #fbbf24;
     font-weight: bold;
     text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
-    animation: yellow-glow 1.5s infinite alternate;
+    /* animation: yellow-glow 1.5s infinite alternate; */
+    animation: text-shake 0.5s infinite, yellow-glow 1.5s infinite alternate;
 }
 
 @keyframes yellow-glow {
@@ -449,4 +457,21 @@ footer {
     background-color: #10b981;
     color: #0f172a;
     box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
+/* --- YENİ DURUM KARTLARI İÇİN İKON STİLLERİ --- */
+.status-icon {
+    font-size: 4.5rem; /* İkonu devasa yapar */
+    height: 160px; /* Diğer gauge (ibre) grafiklerinin yüksekliği ile birebir eşitler */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Flaşör sırasında ikonlar biraz daha belirginleşsin */
+.card.analog-danger .status-icon {
+    transform: scale(1.1);
+    text-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
 }

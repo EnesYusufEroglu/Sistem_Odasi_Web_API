@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
         min: 0,
         max: 50,
         title: "Sıcaklık",
-        label: "°C",
         valueFontColor: "#f8fafc",
         titleFontColor: "#94a3b8"
     });
@@ -45,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
         min: 0,
         max: 100,
         title: "Nem",
-        label: "%",
         valueFontColor: "#f8fafc",
         titleFontColor: "#94a3b8"
     });
@@ -56,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
         min: 0,
         max: 1023,
         title: "Duman/Gaz",
-        label: "PPM",
         valueFontColor: "#f8fafc",
         titleFontColor: "#94a3b8"
     });
@@ -191,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 2000);
 
     // --- CSV İNDİRME TETİKLEYİCİSİ ---
-    document.getElementById("btn-download-csv").addEventListener("click", function() {
+    document.getElementById("btn-download-csv").addEventListener("click", function () {
         if (currentHistoryData.length === 0) {
             alert("İndirilecek geçmiş veri bulunamadı!");
             return;
@@ -202,7 +199,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function anlikVerileriGetir() {
     const statusBadge = document.getElementById("connection-status");
-    const energyBadge = document.getElementById("energy-badge");
 
     fetch(API_LAST_URL)
         .then(response => {
@@ -243,26 +239,67 @@ function anlikVerileriGetir() {
                 cardGaz.classList.remove("analog-danger");
             }
 
-            // --- ENERJİ DURUMU ROZET GÜNCELLEMESİ ---
+            // --- YENİ KART: ENERJİ DURUMU GÜNCELLEMESİ ---
+            const cardEnerji = document.getElementById("card-enerji");
+            const iconEnerji = document.getElementById("icon-enerji");
+            const textEnerji = document.getElementById("text-enerji");
+
             if (data.enerjiVarMi === true) {
-                energyBadge.className = "energy-badge energy-ok";
-                energyBadge.textContent = "⚡ Enerji: Şebeke";
+                iconEnerji.textContent = "⚡";
+                textEnerji.textContent = "Şebeke (Kesintisiz)";
+                textEnerji.style.color = "#10b981"; // Yeşil metin
+                cardEnerji.classList.remove("analog-danger");
             } else {
-                energyBadge.className = "energy-badge energy-fail";
-                energyBadge.textContent = "⚡ Enerji: Jeneratör";
+                iconEnerji.textContent = "🔋";
+                textEnerji.textContent = "JENERATÖR / UPS DEVREDE!";
+                textEnerji.style.color = "#ef4444"; // Kırmızı metin
+                cardEnerji.classList.add("analog-danger"); // Kırmızı flaşör alarmını başlat
             }
 
-            // --- KAPİ DURUMU ROZET GÜNCELLEMESİ ---
-            const doorBadge = document.getElementById("door-badge");
+            // --- YENİ KART: KAPI DURUMU GÜNCELLEMESİ ---
+            const cardKapi = document.getElementById("card-kapi");
+            const iconKapi = document.getElementById("icon-kapi");
+            const textKapi = document.getElementById("text-kapi");
+
             if (data.kapiAcikMi === true) {
-                doorBadge.className = "door-badge door-open";
-                doorBadge.textContent = "🚪 Kapı: AÇIK (ALARM)";
+                iconKapi.textContent = "🚨"; // İkonu alarma dönüştür
+                textKapi.textContent = "AÇIK (GÜVENLİK İHLALİ)";
+                textKapi.style.color = "#ef4444";
+                cardKapi.classList.add("analog-danger"); // Kırmızı flaşör alarmını başlat
             } else {
-                doorBadge.className = "door-badge door-closed";
-                doorBadge.textContent = "🚪 Kapı: Kilitli";
+                iconKapi.textContent = "🚪";
+                textKapi.textContent = "Güvenli";
+                textKapi.style.color = "#10b981";
+                cardKapi.classList.remove("analog-danger");
             }
 
-            // --- DİJİTAL TABLO GÜNCELLEMELERİ (EŞİKLER DİNAMİK YAPILDI) ---
+            // --- YENİ KART: KLİMA DURUMU GÜNCELLEMESİ ---
+            const cardKlima = document.getElementById("card-klima");
+            const iconKlima = document.getElementById("icon-klima");
+            const textKlima = document.getElementById("text-klima");
+
+            if (data.klimaAcikMi === true) {
+                iconKlima.textContent = "❄️";
+                textKlima.textContent = "Klima Aktif (Soğutuyor)";
+                textKlima.style.color = "#10b981"; // Güvenli Yeşil
+                cardKlima.classList.remove("analog-danger");
+            } else {
+                iconKlima.textContent = "💨";
+                
+                // Akıllı Alarm Modu: Sıcaklık yüksek ama klima kapalıysa tehlikeyi vurgula
+                if (data.sicaklik > thresholds.tempMax) {
+                    textKlima.textContent = "KAPALI / SICAKLIK KRİTİK!";
+                    textKlima.style.color = "#ef4444";
+                    cardKlima.classList.add("analog-danger"); // Agresif kırmızı flaşör başlasın
+                } else {
+                    textKlima.textContent = "Klima Kapalı";
+                    textKlima.style.color = "#94a3b8"; // Normal gri tonu
+                    cardKlima.classList.remove("analog-danger");
+                }
+            }
+
+            // --- DİJİTAL TABLO GÜNCELLEMELERİ ---
+            // -- DİJİTAL TABLO SICAKLIK DURUMU GÜNCELLEMESİ ---
             document.getElementById("table-temp").textContent = `${data.sicaklik.toFixed(1)} °C`;
             const tempStatus = document.getElementById("table-temp-status");
             if (data.sicaklik > thresholds.tempMax) {
@@ -273,6 +310,7 @@ function anlikVerileriGetir() {
                 tempStatus.className = "text-green-stable";
             }
 
+            // -- DİJİTAL TABLO NEM DURUMU GÜNCELLEMESİ ---
             document.getElementById("table-hum").textContent = `${data.nem.toFixed(1)} %`;
             const humStatus = document.getElementById("table-hum-status");
             if (data.nem < thresholds.humMin || data.nem > thresholds.humMax) {
@@ -283,6 +321,7 @@ function anlikVerileriGetir() {
                 humStatus.className = "text-green-stable";
             }
 
+            // -- DİJİTAL TABLO GAZ DURUMU GÜNCELLEMESİ ---
             document.getElementById("table-gas").textContent = `${data.gaz} PPM`;
             const gasStatus = document.getElementById("table-gas-status");
             if (data.gaz > thresholds.gasMax) {
@@ -293,6 +332,7 @@ function anlikVerileriGetir() {
                 gasStatus.className = "text-green-stable";
             }
 
+            // -- DİJİTAL TABLO ENERJİ DURUMU GÜNCELLEMESİ ---
             const tableEnergy = document.getElementById("table-energy");
             const tableEnergyStatus = document.getElementById("table-energy-status");
             if (data.enerjiVarMi) {
@@ -305,16 +345,36 @@ function anlikVerileriGetir() {
                 tableEnergyStatus.className = "text-red-alarm";
             }
 
+            // -- DİJİTAL TABLO KAPI DURUMU GÜNCELLEMESİ ---
             const tableDoor = document.getElementById("table-door");
             const tableDoorStatus = document.getElementById("table-door-status");
             if (data.kapiAcikMi) {
-                tableDoor.textContent = "AÇIK";
-                tableDoorStatus.textContent = "🚨 GÜVENLİK İHLALİ!";
+                tableDoor.textContent = "KAPI AÇIK";
+                tableDoorStatus.textContent = "🚨 HAREKET ALGILANDI!";
                 tableDoorStatus.className = "text-red-alarm";
             } else {
                 tableDoor.textContent = "KAPALI";
                 tableDoorStatus.textContent = "✅ Güvenli";
                 tableDoorStatus.className = "text-green-stable";
+            }
+
+            // --- DİJİTAL TABLO KLİMA DURUMU GÜNCELLEMESİ ---
+            const tableKlima = document.getElementById("table-klima");
+            const tableKlimaStatus = document.getElementById("table-klima-status");
+            
+            if (data.klimaAcikMi) {
+                tableKlima.textContent = "AÇIK";
+                tableKlimaStatus.textContent = "✅ Çalışıyor";
+                tableKlimaStatus.className = "text-green-stable";
+            } else {
+                tableKlima.textContent = "KAPALI";
+                if (data.sicaklik > thresholds.tempMax) {
+                    tableKlimaStatus.textContent = "🚨 Risk: Yüksek Sıcaklık & Klima Kapalı!";
+                    tableKlimaStatus.className = "text-red-alarm";
+                } else {
+                    tableKlimaStatus.textContent = "💤 Klima Kapalı";
+                    tableKlimaStatus.className = "text-green-stable";
+                }
             }
 
             const tarih = new Date(data.kayitTarihi);
@@ -335,7 +395,7 @@ function grafikVerileriniGuncelle(limit) {
         .then(siraliVeri => {
             currentHistoryData = siraliVeri; // CSV için veriyi sakla
             const zamanEtiketleri = siraliVeri.map(x => {
-                const d = new Date(x.kayitTarihi); 
+                const d = new Date(x.kayitTarihi);
                 return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             });
 
@@ -364,26 +424,26 @@ function exportToCSV(dataList) {
         let tarih = new Date(item.kayitTarihi).toLocaleString('tr-TR');
         let enerji = item.enerjiVarMi ? "Sebeke" : "UPS/Jenerator";
         let kapi = item.kapiAcikMi ? "ACIK (ALARM)" : "KAPALI";
-        
+
         // JS küsuratlı sayıların noktalarını Excel virgülüyle değiştirmek gerekebilir (.toFixed kullanarak temiz yazıyoruz)
         let sicaklik = item.sicaklik.toFixed(1).replace('.', ',');
         let nem = item.nem.toFixed(1).replace('.', ',');
-        
+
         csvContent += `${tarih};${sicaklik};${nem};${item.gaz};${enerji};${kapi}\r\n`;
     });
 
     // Türkçe karakterlerin Excel'de düzgün açılması için UTF-8 BOM ekliyoruz (\uFEFF)
     const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
-    
+
     // Geçici bir gizli link oluşturup tarayıcıya tıklatıyoruz
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    
+
     // Dosya adı dinamik olarak o anın tarihiyle kaydolur
-    const dosyaTarihi = new Date().toISOString().slice(0,10);
+    const dosyaTarihi = new Date().toISOString().slice(0, 10);
     link.setAttribute("download", `Sistem_Odasi_Rapor_${dosyaTarihi}.csv`);
-    
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
