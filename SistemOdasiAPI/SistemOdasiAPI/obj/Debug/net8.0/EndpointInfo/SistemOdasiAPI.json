@@ -135,7 +135,16 @@
           "enerjiVarMi": {
             "type": "boolean"
           },
+          "hareketVarMi": {
+            "type": "boolean"
+          },
           "kapiAcikMi": {
+            "type": "boolean"
+          },
+          "klimaAcikMi": {
+            "type": "boolean"
+          },
+          "klima2AcikMi": {
             "type": "boolean"
           },
           "kayitTarihi": {

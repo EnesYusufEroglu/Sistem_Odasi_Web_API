@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemOdasiAPI.Data;
 
@@ -11,9 +12,11 @@ using SistemOdasiAPI.Data;
 namespace SistemOdasiAPI.Migrations
 {
     [DbContext(typeof(SistemDbContext))]
-    partial class SistemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260720080226_KlimaDurumuEkleme")]
+    partial class KlimaDurumuEkleme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,17 +39,11 @@ namespace SistemOdasiAPI.Migrations
                     b.Property<int>("Gaz")
                         .HasColumnType("int");
 
-                    b.Property<bool>("HareketVarMi")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("KapiAcikMi")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("KayitTarihi")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("Klima2AcikMi")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("KlimaAcikMi")
                         .HasColumnType("bit");

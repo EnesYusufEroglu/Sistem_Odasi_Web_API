@@ -10,7 +10,6 @@ namespace SistemOdasiAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
             // Web arayüzünün (JS) API'ye baðlanabilmesi için CORS izni ekliyoruz
             builder.Services.AddCors(options =>
             {
@@ -22,15 +21,11 @@ namespace SistemOdasiAPI
                 });
             });
 
-
             // MS SQL Baðlantýsýný ve DbContext'i servis olarak ekliyoruz
             builder.Services.AddDbContext<SistemDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("MsSqlBaglantisi")));
 
-
-
             // Add services to the container.
-
             builder.Services.AddControllers();
             // Arka planda çalýþan temizlik servisini projeye dahil ediyoruz
             builder.Services.AddHostedService<VeriTemizlikServisi>();
@@ -48,15 +43,11 @@ namespace SistemOdasiAPI
             }
 
             app.UseHttpsRedirection();
-
             app.UseCors("HerKeseIzinVer");
-
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
+
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 namespace SistemOdasiAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")] // Erişim adresimiz: http://localhost:5000/api/veri (veya projenizin portu)
+    [Route("api/[controller]")] // Erişim adresimiz: http://localhost:7014/api/veri
     public class VeriController : ControllerBase
     {
         private readonly SistemDbContext _context;

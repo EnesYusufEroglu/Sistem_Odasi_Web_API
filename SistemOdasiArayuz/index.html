@@ -11,148 +11,49 @@
 <body>
     <div class="container">
         <header>
-            <h1>Sistem Odası Ortam Durumu</h1>
-            <p>Gerçek Zamanlı Takip Paneli (MSSQL Entegrasyonlu)</p>
+            <h1>Sistem Odası Durum Takip Paneli</h1>
         </header>
 
         <div class="status-strip">
             <div id="connection-status" class="status-badge checking">Bağlantı Kontrol Ediliyor...</div>
         </div>
 
-        <!-- Görünüm ve Ayar Değiştirme Paneli -->
-        <div class="view-switcher-container">
-            <button id="btn-analog" class="switcher-btn active">📊 Analog Göstergeler</button>
-            <button id="btn-digital" class="switcher-btn">📋 Dijital Liste</button>
-            <button id="btn-settings" class="switcher-btn">⚙️ Eşik Ayarları</button>
-        </div>
-
-        <!-- 3'lü Gösterge Paneli, Dijital Liste ve Ayarlar -->
-        <main class="dashboard-grid">
-            <!-- Analog Kartlar -->
-            <!-- Sıcaklık Kartı -->
-            <div class="card analog-view" id="card-sicaklik">
-                <h3>Sıcaklık</h3>
-                <div id="gauge-sicaklik" class="gauge"></div>
-                <div class="unit" id="text-sicaklik" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...</div>
-            </div>
-
-            <!-- Nem Oranı Kartı -->
-            <div class="card analog-view" id="card-nem">
-                <h3>Nem Oranı</h3>
-                <div id="gauge-nem" class="gauge"></div>
-                <div class="unit" id="text-nem" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...</div>
-            </div>
-
-            <!-- Gaz Seviyesi Kartı -->
-            <div class="card analog-view" id="card-gaz">
-                <h3>Gaz Seviyesi</h3>
-                <div id="gauge-gaz" class="gauge"></div>
-                <div class="unit" id="text-gaz" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...</div>
-            </div>
-
-            <!-- Enerji Durumu Kartı -->
-            <div class="card analog-view" id="card-enerji">
-                <h3>Enerji Kaynağı</h3>
-                <div class="status-icon" id="icon-enerji">⚡</div>
-                <div class="unit" id="text-enerji" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...</div>
-            </div>
-
-            <!-- Hareket Durumu Kartı -->
-            <div class="card analog-view" id="card-hareket">
-                <h3>Hareket Durumu</h3>
-                <div class="status-icon" id="icon-hareket">🟢</div>
-                <div class="unit" id="text-hareket" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...</div>
-            </div>
-
-            <!-- Klima Durumu Kartı -->
-            <div class="card analog-view" id="card-klima">
-                <h3>Klima</h3>
-                <div class="status-icon" id="icon-klima">❄️</div>
-                <div class="unit" id="text-klima" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...</div>
-            </div>
-
-            <!-- Dijital Liste Görünümü -->
-            <div class="card digital-view-container hidden">
-                <h3>Anlık Dijital Veri Listesi</h3>
-                <div class="table-wrapper">
-                    <table class="digital-table">
-                        <thead>
-                            <tr>
-                                <th>Parametre</th>
-                                <th>Değer</th>
-                                <th>Durum / Eşik</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>🌡️ Ortam Sıcaklığı</td>
-                                <td id="table-temp">-- °C</td>
-                                <td id="table-temp-status">--</td>
-                            </tr>
-                            <tr>
-                                <td>💧 Bağıl Nem</td>
-                                <td id="table-hum">-- %</td>
-                                <td id="table-hum-status">--</td>
-                            </tr>
-                            <tr>
-                                <td>⚠️ Duman / Gaz Yoğunluğu</td>
-                                <td id="table-gas">-- PPM</td>
-                                <td id="table-gas-status">--</td>
-                            </tr>
-                            <tr>
-                                <td>⚡ Enerji Kaynağı</td>
-                                <td id="table-energy">--</td>
-                                <td id="table-energy-status">--</td>
-                            </tr>
-                            <tr>
-                                <td>🏃 Hareket Durumu</td>
-                                <td id="table-movement">--</td>
-                                <td id="table-movement-status">--</td>
-                            </tr>
-                            <tr>
-                                <td>❄️ Klima</td>
-                                <td id="table-klima">--</td>
-                                <td id="table-klima-status">--</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <!-- SOL SEKMELİ VE KONTROLLÜ YENİ DÜZEN -->
+        <div class="app-layout">
+            <!-- Sol Kumanda Merkezi (Sidebar) -->
+            <aside class="sidebar-tabs">
+                <!-- YENİ: Menü Açma/Kapama Başlık Butonu -->
+                <div class="sidebar-header">
+                    <button id="btn-toggle-sidebar" class="toggle-btn" title="Menüyü Daralt / Genişlet">
+                        <span class="toggle-icon">☰</span>
+                    </button>
+                    <span class="sidebar-title">Menü</span>
                 </div>
-            </div>
-
-            <!-- Eşik Değer Ayarları Kartı (Varsayılan olarak gizli) -->
-            <div class="card settings-view-container hidden" id="settings-card">
-                <h3>⚠️ Kritik Eşik Değer Ayarları</h3>
-                <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Alarmların hangi değerlerde
-                    tetikleneceğini buradan belirleyebilirsiniz.</p>
-
-                <div class="settings-grid">
-                    <div class="setting-group">
-                        <label for="input-temp-max">Maksimum Sıcaklık (°C):</label>
-                        <input type="number" id="input-temp-max" step="0.5">
-                    </div>
-                    <div class="setting-group">
-                        <label for="input-hum-min">Minimum Nem (%):</label>
-                        <input type="number" id="input-hum-min">
-                    </div>
-                    <div class="setting-group">
-                        <label for="input-hum-max">Maksimum Nem (%):</label>
-                        <input type="number" id="input-hum-max">
-                    </div>
-                    <div class="setting-group">
-                        <label for="input-gas-max">Maksimum Gaz (PPM):</label>
-                        <input type="number" id="input-gas-max">
-                    </div>
+                <!-- GÖRÜNÜM SEKMELERİ -->
+                <div class="sidebar-group">
+                    <span class="sidebar-label">Görünüm Modu</span>
+                    <button id="btn-analog" class="switcher-btn active">
+                        <span class="tab-icon">📊</span>
+                        <span class="tab-text">Analog Göstergeler</span>
+                    </button>
+                    <button id="btn-digital" class="switcher-btn">
+                        <span class="tab-icon">📋</span>
+                        <span class="tab-text">Dijital Liste</span>
+                    </button>
+                    <button id="btn-settings" class="switcher-btn">
+                        <span class="tab-icon">⚙️</span>
+                        <span class="tab-text">Eşik Ayarları</span>
+                    </button>
                 </div>
-                <button id="btn-save-settings" class="save-btn">Kaydet ve Uygula</button>
-            </div>
 
-            <div class="card chart-card">
-                <div class="chart-header">
-                    <h3>Ortam Parametreleri Değişim Grafiği</h3>
-                    <div class="chart-actions" style="display: flex; gap: 10px; align-items: center;">
-                        <!-- YENİ: CSV İndirme Butonu -->
-                        <button id="btn-download-csv" class="download-btn">📥 Raporu İndir (CSV)</button>
+                <div class="sidebar-divider"></div>
 
+                <!-- GRAFİK VE RAPORLAMA KONTROLLERİ -->
+                <div class="sidebar-group">
+                    <span class="sidebar-label">Grafik & Raporlama</span>
+
+                    <div class="sidebar-control-item">
+                        <label for="data-limit-select" class="control-label">Veri Limiti:</label>
                         <select id="data-limit-select" class="styled-select">
                             <option value="20">Son 20 Veri</option>
                             <option value="50">Son 50 Veri</option>
@@ -160,12 +61,176 @@
                             <option value="-1">Son 24 Saat</option>
                         </select>
                     </div>
+
+                    <button id="btn-download-csv" class="switcher-btn download-btn">
+                        <span class="tab-icon">📥</span>
+                        <span class="tab-text">Raporu İndir (CSV)</span>
+                    </button>
                 </div>
-                <div class="chart-container">
-                    <canvas id="historyChart"></canvas>
+            </aside>
+
+            <!-- Sağ Taraf Ana Gösterge Alanı -->
+            <main class="dashboard-grid">
+                <!-- Analog Kartlar -->
+                <div class="card analog-view" id="card-sicaklik">
+                    <h3>Sıcaklık</h3>
+                    <div id="gauge-sicaklik" class="gauge"></div>
+                    <div class="unit" id="text-sicaklik" style="font-size: 1.1rem; margin-top: 10px;">Kontrol
+                        Ediliyor...</div>
                 </div>
-            </div>
-        </main>
+
+                <div class="card analog-view" id="card-nem">
+                    <h3>Nem Oranı</h3>
+                    <div id="gauge-nem" class="gauge"></div>
+                    <div class="unit" id="text-nem" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...
+                    </div>
+                </div>
+
+                <div class="card analog-view" id="card-gaz">
+                    <h3>Gaz Seviyesi</h3>
+                    <div id="gauge-gaz" class="gauge"></div>
+                    <div class="unit" id="text-gaz" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...
+                    </div>
+                </div>
+
+                <div class="card analog-view" id="card-enerji">
+                    <h3>Enerji Kaynağı</h3>
+                    <div class="status-icon" id="icon-enerji">⚡</div>
+                    <div class="unit" id="text-enerji" style="font-size: 1.1rem; margin-top: 10px;">Kontrol Ediliyor...
+                    </div>
+                </div>
+
+                <!-- YENİ: İKİLİ GÜVENLİK & ERİŞİM KARTI (Hareket + Kapı Yan Yana) -->
+                <div class="card analog-view" id="card-guvenlik-combined">
+                    <h3 id="title-guvenlik-combined">Güvenlik & Erişim</h3>
+                    <div class="dual-card-horizontal">
+                        <!-- Hareket Subcard (Sol) -->
+                        <div class="subcard-item" id="hareket-subcard">
+                            <span class="subcard-title">🏃 Hareket</span>
+                            <span class="status-indicator-sm" id="hareket-status">YOK</span>
+                        </div>
+
+                        <!-- Kapı Subcard (Sağ) -->
+                        <div class="subcard-item" id="kapi-subcard">
+                            <span class="subcard-title">🚪 Kapı</span>
+                            <span class="status-indicator-sm" id="kapi-status">KAPALI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- İKİLİ YAN YANA KLİMA KARTI -->
+                <div class="card analog-view" id="card-klima-combined">
+                    <h3 id="title-klima-combined">Klima Sistemi</h3>
+                    <div class="dual-klima-horizontal">
+                        <!-- Klima 1 (Sol) -->
+                        <div class="klima-subcard" id="klima1-subcard">
+                            <span class="klima-title">❄️ Klima 1</span>
+                            <span class="status-indicator-sm" id="klima1-status">KAPALI</span>
+                        </div>
+
+                        <!-- Klima 2 (Sağ) -->
+                        <div class="klima-subcard" id="klima2-subcard">
+                            <span class="klima-title">❄️ Klima 2</span>
+                            <span class="status-indicator-sm" id="klima2-status">KAPALI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dijital Liste Görünümü -->
+                <div class="card digital-view-container hidden">
+                    <h3>Anlık Dijital Veri Listesi</h3>
+                    <div class="table-wrapper">
+                        <table class="digital-table">
+                            <thead>
+                                <tr>
+                                    <th>Parametre</th>
+                                    <th>Değer</th>
+                                    <th>Durum / Eşik</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>🌡️ Ortam Sıcaklığı</td>
+                                    <td id="table-temp">-- °C</td>
+                                    <td id="table-temp-status">--</td>
+                                </tr>
+                                <tr>
+                                    <td>💧 Bağıl Nem</td>
+                                    <td id="table-hum">-- %</td>
+                                    <td id="table-hum-status">--</td>
+                                </tr>
+                                <tr>
+                                    <td>⚠️ Duman / Gaz Yoğunluğu</td>
+                                    <td id="table-gas">-- PPM</td>
+                                    <td id="table-gas-status">--</td>
+                                </tr>
+                                <tr>
+                                    <td>⚡ Enerji Kaynağı</td>
+                                    <td id="table-energy">--</td>
+                                    <td id="table-energy-status">--</td>
+                                </tr>
+                                <tr>
+                                    <td>🏃 Hareket Durumu</td>
+                                    <td id="table-movement">--</td>
+                                    <td id="table-movement-status">--</td>
+                                </tr>
+                                <!-- YENİ: Kapı Durumu Satırı -->
+                                <tr>
+                                    <td>🚪 Kapı Durumu</td>
+                                    <td id="table-door">--</td>
+                                    <td id="table-door-status">--</td>
+                                </tr>
+                                <tr>
+                                    <td>❄️ Klima 1</td>
+                                    <td id="table-klima">--</td>
+                                    <td id="table-klima-status">--</td>
+                                </tr>
+                                <tr>
+                                    <td>❄️ Klima 2</td>
+                                    <td id="table-klima2">--</td>
+                                    <td id="table-klima2-status">--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Eşik Değer Ayarları Kartı -->
+                <div class="card settings-view-container hidden" id="settings-card">
+                    <h3>⚠️ Kritik Eşik Değer Ayarları</h3>
+
+                    <div class="settings-grid">
+                        <div class="setting-group">
+                            <label for="input-temp-max">Maksimum Sıcaklık (°C):</label>
+                            <input type="number" id="input-temp-max" step="0.5">
+                        </div>
+                        <div class="setting-group">
+                            <label for="input-hum-min">Minimum Nem (%):</label>
+                            <input type="number" id="input-hum-min">
+                        </div>
+                        <div class="setting-group">
+                            <label for="input-hum-max">Maksimum Nem (%):</label>
+                            <input type="number" id="input-hum-max">
+                        </div>
+                        <div class="setting-group">
+                            <label for="input-gas-max">Maksimum Gaz (PPM):</label>
+                            <input type="number" id="input-gas-max">
+                        </div>
+                    </div>
+                    <button id="btn-save-settings" class="save-btn">Kaydet ve Uygula</button>
+                </div>
+
+                <!-- Grafik Alanı (Temizlenmiş Başlıkla) -->
+                <div class="card chart-card">
+                    <div class="chart-header">
+                        <h3>Ortam Parametreleri Değişim Grafiği</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="historyChart"></canvas>
+                    </div>
+                </div>
+            </main>
+        </div>
 
         <footer>
             <p>Son Güncelleme: <span id="last-update">--:--:--</span></p>
