@@ -141,10 +141,13 @@
           "kapiAcikMi": {
             "type": "boolean"
           },
-          "klimaAcikMi": {
+          "klima1AcikMi": {
             "type": "boolean"
           },
           "klima2AcikMi": {
+            "type": "boolean"
+          },
+          "suBaskiniVarMi": {
             "type": "boolean"
           },
           "kayitTarihi": {
